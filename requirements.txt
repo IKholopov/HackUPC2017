@@ -5,6 +5,7 @@ Django==1.10.6
 django-belt==1.0a2
 django-model-utils==2.6.1
 packaging==16.8
+psycopg2==2.7
 pyparsing==2.1.10
 six==1.10.0
 static3==0.7.0
