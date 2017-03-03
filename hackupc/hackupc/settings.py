@@ -25,7 +25,7 @@ SECRET_KEY = 'zk7wppgpy72)f(&8lq-cumsq1v)!5#8xxl$3d_#uj3e6e%-)f6'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = [u'team-panda.scalingo.io']
+ALLOWED_HOSTS = [u'team-panda.scalingo.io', '127.0.0.1']
 
 
 # Application definition
@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'bestin'
 ]
 
 MIDDLEWARE = [
@@ -54,7 +55,7 @@ ROOT_URLCONF = 'hackupc.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': ['bestin/templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
