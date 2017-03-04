@@ -1,0 +1,40 @@
+.b-user_side_menu {
+    margin-left: auto;
+    margin-right: auto;
+    width: 400px;
+}
+
+.b-user_avatar {
+    margin-top: 20px;
+    margin-left: auto;
+    margin-right: auto;
+    width: 250px;
+}
+
+.b-user_username {
+    margin-top: 20px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 20px;
+}
+h2 {
+    text-align: center;
+}
+
+.b-user_avatar img {
+    width: 250px;
+    height: 250px;
+    border-radius: 125px;
+    object-fit: cover;
+    margin-bottom: 20px;
+    /*margin-left: auto;
+    margin-right: auto;
+    width: 250px;
+    height: auto;
+    border-radius: 125px;*/
+}
+
+.b-user_avatar_change {
+    margin-right: auto;
+    margin-left: auto;
+}

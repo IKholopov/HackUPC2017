@@ -18,7 +18,6 @@ from django.contrib import admin
 from .settings import STATIC_URL
 
 urlpatterns = [
-    url(r'^/', STATIC_URL + '/main.html'),
     url(r'^admin/', admin.site.urls),
     url(r'', include('bestin.urls'))
 ]
