@@ -49,11 +49,8 @@ def process_twitter(user):
     Activity.objects.bulk_create(charity_twitts)
     adds = []
     for tagged in geo_tagged:
-        adds.append({"geometry": {"x": geo[1], "y": geo[0]}, "attributes": tagged})
-    requests.post('https://services7.arcgis.com/0MAMn0h8N3f8X276/arcgis/rest/services/Social_Activity/FeatureServer/applyEdits?f=pjson&token=qSohDNFVNX1g-1BYd11gcm5LG0FINdKulH7R5NMHWHdaWh1jQ2rdqZoXbCyYMLkAkzCFPgS2CW3D21y1jQWsHvjYkRc-CKnhnow6-7JaA2Bj1t3zML_p54Gq8HphEDqPCHKuy4RsL0Dl4bYE7CKQFw6QFUGb2bBEX2Ndh9ktlYoUhbvhXPxujrCvI4DZqUVq2nM1FJHz9khDnhDeGuEQuUAYvu7zZU9k_WXBJC9r11g&edits='+json.dumps([{"id": 0, "adds": adds}]),
+        adds.append({"geometry": {"x": geo[0]*10**5, "y": geo[1]*10**5}, "attributes": tagged})
+    requests.post('https://services7.arcgis.com/0MAMn0h8N3f8X276/arcgis/rest/services/Social_Activity/FeatureServer/applyEdits?f=pjson&token=rOadHR_lJdqZCyRNQhZdKLynwq1rTfIsIqBucGa7NPm9eavnEQx1Pj82i6-2TYJxOqmx_GeezYZA1xaBhYN31OIaqliboSvOgAFlcBoG36S0RGm1ZwPYaoxe8QFobWiZ6zi1DSWsq0MFcpA-2jvfHvjTAGYCsDM6SaEH0SJUgqBet_DIduAVknrb0g3MBFbh&edits='+json.dumps([{"id": 0, "adds": adds}]),
             headers={'Content-type': 'application/json', 'Accept': 'text/plain'})
-
-
-
 
     #print(api.GetStatus(status_id='837968179766886401'))
