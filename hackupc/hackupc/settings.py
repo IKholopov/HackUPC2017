@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'social_django',
     'bestin'
 ]
 
@@ -83,8 +84,9 @@ try:
 except KeyError:
     database_url = "file:///{}".format(os.path.join(BASE_DIR, 'db.sqlite3'))
 
-DATABASES = { 'default': dj_database_url.config() }
-
+DATABASES = { 'default': { 'ENGINE': 'django.db.backends.sqlite3', 'NAME': os.path.join(BASE_DIR, 'db.sqlite3') }
+    #dj_database_url.config(default=DATABASE_URL),
+}
 # Password validation
 # https://docs.djangoproject.com/en/1.10/ref/settings/#auth-password-validators
 
@@ -127,3 +129,22 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'static'),
 )
+
+# Social
+AUTHENTICATION_BACKENDS = (
+    'social_core.backends.twitter.TwitterOAuth',
+    'social_core.backends.facebook.FacebookOAuth2',
+    'social_core.backends.instagram.InstagramOAuth2'
+)
+
+SOCIAL_AUTH_TWITTER_KEY = 'USqJZDH2p3xOXZu0fFT8nk36r'
+SOCIAL_AUTH_TWITTER_SECRET = 'AgADk4mx6aL5qfJsEgaZMvUkN2wI5ke63stqRqOCOrRrAX6pr6'
+
+SOCIAL_AUTH_FACEBOOK_SECRET = 'c09fe66a29f12b65171124619a128efc'
+SOCIAL_AUTH_FACEBOOK_KEY = '123449248180789'
+
+SOCIAL_AUTH_INSTAGRAM_KEY = 'e9ef95d606254b4ebbded56435ceaa9d'
+SOCIAL_AUTH_INSTAGRAM_SECRET = '77a0f2bbebda4cdbb7bbc524b3f1acc7'
+
+
+SOCIAL_AUTH_LOGIN_REDIRECT_URL = '/'
