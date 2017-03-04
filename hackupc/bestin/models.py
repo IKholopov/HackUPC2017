@@ -5,7 +5,7 @@ class Activity(models.Model):
     social_status_id = models.IntegerField(unique=True)
     user_id = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
     source = models.CharField(max_length=1024)
-    score = models.IntegerField(default=-1)
+    score = models.FloatField(default=-1)
     geodata = models.CharField(max_length=128, null=True)
 
     @classmethod

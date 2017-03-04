@@ -28,6 +28,7 @@ def get_top_scores(request):
     for score in scores:
         print(score)
         highscores.append(score)
+    highscores.sort(key=lambda x: x["total_score"])
     return JsonResponse(json.dumps(highscores), safe=False)
 
 def logout(request):
