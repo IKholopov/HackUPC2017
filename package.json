@@ -1,0 +1,20 @@
+{
+  "name": "hackupc",
+  "version": "1.0.0",
+  "description": "",
+  "main": "hackupc/static/test.js",
+  "scripts": {
+    "develop": "",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/IKholopov/HackUPC2017.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/IKholopov/HackUPC2017/issues"
+  },
+  "homepage": "https://github.com/IKholopov/HackUPC2017#readme"
+}
