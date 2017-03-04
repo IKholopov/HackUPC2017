@@ -1,0 +1,58 @@
+Metadata-Version: 2.0
+Name: django-belt
+Version: 1.0a2
+Summary: Simple package with some utilities for Django
+Home-page: https://github.com/marcosgabarda/django-belt
+Author: Marcos Gabarda
+Author-email: hey@marcosgabarda.com
+License: MIT License
+Platform: UNKNOWN
+Classifier: Development Status :: 3 - Alpha
+Classifier: Environment :: Web Environment
+Classifier: Framework :: Django
+Classifier: Intended Audience :: Developers
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Operating System :: OS Independent
+Classifier: Programming Language :: Python
+Classifier: Programming Language :: Python :: 2
+Classifier: Programming Language :: Python :: 3
+Classifier: Topic :: Utilities
+Requires-Dist: django (>=1.9)
+Requires-Dist: django-model-utils (>=2.0)
+
+===========
+Django Belt
+===========
+
+Simple package with some utilities for Django.
+
+Quick start
+-----------
+
+**1** Install using pip::
+
+    pip install django-belt
+
+**2** Add "belt" to your INSTALLED_APPS settings like this::
+
+    INSTALLED_APPS += ('belt',)
+
+
+
+
+
+History
+-------
+
+1.0a2 (2017-2-21)
++++++++++++++++++
+
+* Added generators module.
+* Added admin widget fot ForeignKeys
+
+1.0a1 (2017-2-20)
++++++++++++++++++
+
+* First release on PyPI.
+
+

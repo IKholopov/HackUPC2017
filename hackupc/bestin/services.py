@@ -17,3 +17,4 @@ def process_twitter(user):
                         access_token_key=oauth_key,
                         access_token_secret=oauth_secret)
     print(api.GetUserTimeline(include_rts=False, count=200))
+    print(api.GetStatus(status_id='837968179766886401'))

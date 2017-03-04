@@ -1,0 +1,46 @@
+html, body
+{
+    height: 100%;
+}
+
+.b-user_side_menu {
+    height: 100%;
+    right: 0;
+    background-color: #c2ccd1;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.b-user_avatar {
+    margin-top: 20px;
+    margin-left: auto;
+    margin-right: auto;
+    width: 250px;
+}
+
+.b-user_username {
+    margin-top: 20px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 20px;
+}
+h2 {
+    text-align: center;
+}
+
+.b-user_avatar img {
+    width: 250px;
+    height: 250px;
+    border-radius: 125px;
+    object-fit: cover;
+    margin-bottom: 20px;
+    /*margin-left: auto;
+    margin-right: auto;
+    width: 250px;
+    height: auto;
+    border-radius: 125px;*/
+}
+
+.b-user_avatar_change {
+    margin-right: auto;
+    margin-left: auto;
+}
