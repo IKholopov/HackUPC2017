@@ -1,0 +1,13 @@
+<div class="b-twitter-login-card">
+    {% load static %}
+    {% load widget_tweaks %}
+    <link rel="stylesheet" type="text/css" href='../../static/css/loginCardTwitter.css'>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-2" id="twitter-icon" ><img src="../../static/twitter.png"></div>
+            <div class="col-md-10" id="twitter-name">
+                <h5>{{ request.user.username }} </h5>
+            </div>
+        </div>
+    </div>
+</div>

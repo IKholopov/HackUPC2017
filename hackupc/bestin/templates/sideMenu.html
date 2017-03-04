@@ -2,7 +2,17 @@
     {% load static %}
     {% load widget_tweaks %}
     <link rel="stylesheet" type="text/css" href='../../static/css/sideMenu.css'>
-
-    <h1>{{ request.user.username }}</h1>
-
+    <div class="b-user-info">
+        <div class="container">
+            <div class="row">
+                {% if request.user.is_authenticated %}
+                    <img src="../../static/Tp3aR75sX5g.jpg" alt="Avatar"> <br>
+                    {% include "loginCardFacebook.html" %}
+                    {% include "loginCardTwitter.html" %}
+                {% else %}
+                    {% include "loginCard.html" %}
+                {% endif %}
+            </div>
+        </div>
+    </div>
 </div>

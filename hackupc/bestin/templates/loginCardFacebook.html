@@ -1,0 +1,13 @@
+<div class="b-login-card">
+    {% load static %}
+    {% load widget_tweaks %}
+    <link rel="stylesheet" type="text/css" href='../../static/css/loginCardFacebook.css'>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-2" id="facebook-icon" ><img src="../../static/facebook.png"></div>
+            <div class="col-md-10" id="facebook-name">
+                <h5>{{ request.user.username }} </h5>
+            </div>
+        </div>
+    </div>
+</div>

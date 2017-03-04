@@ -1,11 +1,148 @@
 {% extends "base.html" %}}
+
+
 {% block content %}
-    <div class="container-fluid" style="height: 100%;">
-        <div class="row" style="height: 100%;">
-            <div class="col-xs-9">
-                <dir class="root"></dir>
+
+    <link rel="stylesheet" href="https://js.arcgis.com/4.3/esri/css/main.css">
+    <script src="https://js.arcgis.com/4.3/"></script>
+
+    <script>
+        window.smoothScroll = function(target) {
+            var scrollContainer = target;
+            do { //find scroll container
+                scrollContainer = scrollContainer.parentNode;
+                if (!scrollContainer) return;
+                scrollContainer.scrollTop += 1;
+            } while (scrollContainer.scrollTop == 0);
+
+            var targetY = 0;
+            do { //find the top of target relatively to the container
+                if (target == scrollContainer) break;
+                targetY += target.offsetTop;
+            } while (target = target.offsetParent);
+
+            scroll = function(c, a, b, i) {
+                i++; if (i > 30) return;
+                c.scrollTop = a + (b - a) / 30 * i;
+                setTimeout(function(){ scroll(c, a, b, i); }, 20);
+            };
+            // start scrolling
+            scroll(scrollContainer, scrollContainer.scrollTop, targetY, 0);
+        }
+    </script>
+
+    <script>
+        require([
+                    "esri/Map",
+                    "esri/views/MapView",
+
+                    "esri/layers/FeatureLayer",
+
+                    "dojo/domReady!"
+                ],
+                function(
+                        Map, MapView,
+                        FeatureLayer
+                ) {
+
+                    var map = new Map({
+                        basemap: "hybrid"
+                    });
+
+                    var view = new MapView({
+                        container: "viewDiv",
+                        map: map,
+
+                        extent: { // autocasts as new Extent()
+                            xmin: -9177811,
+                            ymin: 4247000,
+                            xmax: -9176791,
+                            ymax: 4247784,
+                            spatialReference: 102100
+                        }
+                    });
+
+                    /********************
+                     * Add feature layer
+                     ********************/
+
+                            // Carbon storage of trees in Warren Wilson College.
+                    var featureLayer = new FeatureLayer({
+                                url: "https://services.arcgis.com/V6ZHFr6zdgNZuVG0/arcgis/rest/services/Landscape_Trees/FeatureServer/0"
+                            });
+
+                    map.add(featureLayer);
+
+                });
+    </script>
+    <style>
+
+
+        .left_menu {
+            z-index: 2;
+            height: 100%;
+            margin-right: 0;
+            background: linear-gradient(141deg, #aa90a0 0%, #fed98d 75%);
+            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+            text-align: center;
+        }
+        .dbutton {
+            height: 72px;
+            width: 72px;
+            margin-left: auto;
+            margin-right: auto;
+            padding-top: 12px;
+            margin-bottom: 70%;
+        }
+        .dbutton:hover {
+            border-radius: 36px;
+            border-color: #fff7ff;
+            border-style: solid;
+            border-width: 3px;
+            padding-top: 9px;
+
+        }
+
+    </style>
+
+    <div class="background-image"></div>
+    <div class="container-fluid" style="height: 100%">
+        <div class="row justify-content-center" style="height: 100%">
+            <div class="col-md-1 left_menu" style = "position: fixed; left: 0;">
+                <div class="display-buttons" style="margin-top: 200%">
+                    <div class="rating-button dbutton" onclick="smoothScroll(document.getElementById('rating-view'))">
+                        <img src="../../static/podium.png" height='48' width="48">
+                    </div>
+                    <div class="map-button dbutton" onclick="smoothScroll(document.getElementById('map-view'))">
+                        <img src="../../static/map.png" height='48' width="48">
+                    </div>
+                    <div class="about-button dbutton" onclick="smoothScroll(document.getElementById('about-view'))">
+                        <img src="../../static/about.png" height='48' width="48">
+                    </div>
+                </div>
             </div>
-            <div class="col-xs-3" style="height: 100%; padding-right: 0">
+            <div class="col-md-10 content" style="margin-left: 0">
+                <div class="row" id="rating-view" style=" width: 100%; height: 100%; background-color: #eaeaea">
+
+                </div>
+                <div class="row" id="map-view" style=" width: 100%; height: 100%; background-color: #0d3349">
+                    <div class="container">
+                        <div class="row" style="height: 100%">
+                            <div class="col-md-3">
+
+                            </div>
+                            <div class="col-md-9" style="height: 100%">
+                                <div id="viewDiv" style="margin-top: 7%; width: 100%; height: 90%;"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="row" id="about-view" style=" width: 100%; height: 100%; background-color: #1f7e9a">
+
+                </div>
+            </div>
+            <div class="col-md-2 side_menu" style = "padding-right: 0; position: fixed; top: 0; right: 0; opacity: 1; height: 100%">
                 {% include "sideMenu.html" %}
             </div>
         </div>

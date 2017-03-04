@@ -1,0 +1,20 @@
+.b-login-card {
+    height: 60px;
+    width: 250px;
+
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 4px 8px 0 rgba(0, 0, 0, 0.19);
+    text-align: center;
+    padding: auto;
+    border-radius: 30px;
+    border-style: solid;
+    border-width: 2px;
+    border-color: #2aabd2;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.b-login-card:hover{
+    border-width: 3px;
+}
+
+    /*background: linear-gradient(141deg, #26dac8 0%, #8bfe8b 75%);*/

@@ -1,0 +1,45 @@
+.b-login-card {
+    height: 60px;
+    width: 250px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 4px 8px 0 rgba(0, 0, 0, 0.19);
+    text-align: center;
+    padding: auto;
+    border-radius: 30px;
+    border-color: #3b5998;
+    border-style: solid;
+    border-width: 2px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#facebook-icon {
+    padding: 0;
+
+}
+
+#facebook-icon img {
+    height: 60px;
+    width: 60px;
+    border-radius: 30px;
+    margin-top: -1px;
+    margin-left: -2px;
+    border-style: solid;
+    border-width: 0;
+    border-color: #2aabd2;
+    box-shadow: 0 0 0 0 rgba(0, 0, 0, 0.2), 0 0 0 0 rgba(0, 0, 0, 0.19);
+}
+
+#facebook-name {
+    padding: 0;
+    margin-left: 0;
+}
+
+#facebook-name h5{
+    line-height: 55px;
+    text-align: center;
+    color: #3b5998;
+}
+
+
+
+    /*background: linear-gradient(141deg, #26dac8 0%, #8bfe8b 75%);*/
