@@ -1,5 +1,6 @@
 import twitter
 import json
+import requests
 import hackupc.settings as settings
 from bestin.utils import convert_degs_to_decimal
 from bestin.models import Activity
@@ -23,18 +24,36 @@ def process_twitter(user):
                         access_token_secret=oauth_secret)
     statuses = api.GetUserTimeline(include_rts=False, count=200)
     charity_twitts = []
+    geo_tagged = []
     for status in statuses:
         score = get_score(status.text)
         if score > 0:
             geo = status.coordinates
+            place = status.place
             if geo is not None:
-                geo = str(geo["coordinates"])
+                geo = geo["coordinates"]
+            elif place is not None:
+                place = place["full_name"]
+                responce = requests.get('http://maps.google.com/maps/api/geocode/json?address='+place)
+                location = json.loads(responce.text)["results"][0]["geometry"]["location"]
+                geo = [location["lng"], location["lat"]]
+            geo_str = str(geo)
             try:
                 activity = Activity.objects.get(social_status_id=status.id)
             except Activity.DoesNotExist:
                 charity_twitts.append(Activity.create(social_status_id=status.id, user_id=user, source=status.text,
-                                score=score, geodata=geo))
-    print(len(charity_twitts))
+                                score=score, geodata=geo_str))
+            if geo is not None:
+                geo_tagged.append({"UserID": user.id, "text": status.text,
+                "score": score, "lat": geo[1], "lon": geo[0]})
     Activity.objects.bulk_create(charity_twitts)
+    adds = []
+    for tagged in geo_tagged:
+        adds.append({"geometry": {"x": geo[1], "y": geo[0]}, "attributes": tagged})
+    requests.post('https://services7.arcgis.com/0MAMn0h8N3f8X276/arcgis/rest/services/Social_Activity/FeatureServer/applyEdits?f=pjson&token=qSohDNFVNX1g-1BYd11gcm5LG0FINdKulH7R5NMHWHdaWh1jQ2rdqZoXbCyYMLkAkzCFPgS2CW3D21y1jQWsHvjYkRc-CKnhnow6-7JaA2Bj1t3zML_p54Gq8HphEDqPCHKuy4RsL0Dl4bYE7CKQFw6QFUGb2bBEX2Ndh9ktlYoUhbvhXPxujrCvI4DZqUVq2nM1FJHz9khDnhDeGuEQuUAYvu7zZU9k_WXBJC9r11g&edits='+json.dumps([{"id": 0, "adds": adds}]),
+            headers={'Content-type': 'application/json', 'Accept': 'text/plain'})
+
+
+
 
     #print(api.GetStatus(status_id='837968179766886401'))
