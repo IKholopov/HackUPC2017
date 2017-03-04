@@ -5,6 +5,7 @@ dj-static==0.0.6
 Django==1.10.6
 django-belt==1.0a2
 django-model-utils==2.6.1
+django-widget-tweaks==1.4.1
 future==0.16.0
 gunicorn==19.6.0
 oauthlib==2.0.1
