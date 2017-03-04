@@ -4,6 +4,7 @@ import requests
 import hackupc.settings as settings
 from bestin.utils import convert_degs_to_decimal
 from bestin.models import Activity
+from bestin.process import content_analyzer
 
 def analyze_feed(user):
     if user.social_auth.get().provider == 'instagram':
@@ -12,7 +13,7 @@ def analyze_feed(user):
         process_twitter(user)
 
 def get_score(intput_text):
-    return 10
+    return content_analyzer().process_text(intput_text)
 
 def process_twitter(user):
     tokens = user.social_auth.get().extra_data["access_token"]
@@ -22,11 +23,12 @@ def process_twitter(user):
                         consumer_secret=settings.SOCIAL_AUTH_TWITTER_SECRET,
                         access_token_key=oauth_key,
                         access_token_secret=oauth_secret)
-    statuses = api.GetUserTimeline(include_rts=False, count=200)
+    statuses = api.GetUserTimeline(include_rts=False, count=20)
     charity_twitts = []
     geo_tagged = []
     for status in statuses:
         score = get_score(status.text)
+        print(score)
         if score > 0:
             geo = status.coordinates
             place = status.place
@@ -37,20 +39,24 @@ def process_twitter(user):
                 responce = requests.get('http://maps.google.com/maps/api/geocode/json?address='+place)
                 location = json.loads(responce.text)["results"][0]["geometry"]["location"]
                 geo = [location["lng"], location["lat"]]
+            print(geo)
             geo_str = str(geo)
             try:
                 activity = Activity.objects.get(social_status_id=status.id)
             except Activity.DoesNotExist:
                 charity_twitts.append(Activity.create(social_status_id=status.id, user_id=user, source=status.text,
                                 score=score, geodata=geo_str))
-            if geo is not None:
-                geo_tagged.append({"UserID": user.id, "text": status.text,
-                "score": score, "lat": geo[1], "lon": geo[0]})
+                if geo is not None:
+                    geo_tagged.append({"UserID": user.id, "text": status.text.replace('#', ' '),
+                    "score": score, "lat": geo[1], "lon": geo[0]})
+
     Activity.objects.bulk_create(charity_twitts)
     adds = []
+    print(geo_tagged)
     for tagged in geo_tagged:
         adds.append({"geometry": {"x": tagged["lon"]*10**5, "y": tagged["lat"]*10**5}, "attributes": tagged})
-    requests.post('https://services7.arcgis.com/0MAMn0h8N3f8X276/arcgis/rest/services/Social_Activity/FeatureServer/applyEdits?f=pjson&edits='+json.dumps([{"id": 0, "adds": adds}]),
-            headers={'Content-type': 'application/json', 'Accept': 'text/plain'})
+    print(adds)
+    print(requests.post('https://services7.arcgis.com/0MAMn0h8N3f8X276/arcgis/rest/services/Social_Activity/FeatureServer/applyEdits?f=pjson&edits='+json.dumps([{"id": 0, "adds": adds}]),
+            headers={'Content-type': 'application/json', 'Accept': 'text/plain'}).text)
 
     #print(api.GetStatus(status_id='837968179766886401'))
