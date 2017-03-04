@@ -1,0 +1,18 @@
+{% extends "base.html" %}}
+{% block content %}
+<<<<<<< HEAD
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-xs-8">
+                <dir class="root"></dir>
+            </div>
+            <div class="col-xs-2">
+                {% include "sideMenu.html" %}
+            </div>
+        </div>
+    </div>
+    <script type="text/babel" src="../../static/app.jsx"></script>
+=======
+{{request.user.username}}
+>>>>>>> a970e640b2ed88b915c6cf9e326f0279a68603f4
+{% endblock %}

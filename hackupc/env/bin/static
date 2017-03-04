@@ -1,4 +1,4 @@
-#!/home/zerts/MIPT/hackUPC/HackUPC2017/hackupc/env/bin/python
+#!/home/zerts/MIPT/hackUPC/HackUPC2017/hackupc/env/bin/python3
 
 # -*- coding: utf-8 -*-
 import re

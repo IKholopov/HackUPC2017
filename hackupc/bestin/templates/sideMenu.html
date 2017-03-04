@@ -1,85 +1,8 @@
-<script>
-    $(document).ready(function(){
-        var is_change_name_mode = 0;
-        $('.b-user_name_change > form > input[name="firstName"]').prop('value', $('.b-user_name_change').data('first-name'));
-        $('.b-user_name_change > form > input[name="lastName"]').prop('value', $('.b-user_name_change').data('last-name'));
-
-        $(".change-username-button").click(function(){
-            if (is_change_name_mode == 0) {
-                $(".b-user_name_change").slideDown("slow");
-                is_change_name_mode = 1;
-            }
-            else {
-                $(".b-user_name_change").slideUp("slow");
-                is_change_name_mode = 0;
-            }
-        });
-    });
-</script>
-
 <div class="b-user_side_menu">
     {% load static %}
     {% load widget_tweaks %}
     <link rel="stylesheet" type="text/css" href='../../static/css/sideMenu.css'>
-    {% block user %}
-        {% if user.is_authenticated %}
-            <div class="b-user_avatar">
-                <img src="{{ user_profile.avatar.url }}" alt="Avatar" height="300" width="300"> <br>
-            </div>
-            {% if 'user' in request.get_full_path %}
-                <div class="b-user-change">
-                    <div class="container">
-                        <div class="row b-user_avatar_change">
 
-                            <form method="post" action="{% url 'updateAvatar' %}" enctype="multipart/form-data">
-                                <label class="custom-file">
-                                    {% csrf_token %}
-                                    <div class="col-xs-1"></div>
-                                    <div class="col-xs-7">
-                                        {{ avatarChangeForm.file|add_class:"custom-file-input" }}
-                                        <span class="custom-file-control"></span>
-                                    </div>
-                                    <div class="col-xs-4">
-                                        <input class="btn btn-primary" type="submit" value="Upload">
-                                    </div>
-                                </label>
-                            </form>
+    <h1>{{ request.user.username }}</h1>
 
-                        </div>
-                        <div class="row b-user_name_change" data-first-name="{{ user_profile.first_name }}"
-                             data-last-name="{{ user_profile.last_name }}" style="display: none">
-                            <form method="post" action="{% url 'core:updateUsername' slug=user_profile.username%}" enctype="multipart/form-data">
-                                {% csrf_token %}
-                                {{ usernameChangeForm.firstName|add_class:"form-control" }}
-                                {{ usernameChangeForm.lastName|add_class:"form-control" }}
-                                <input class="btn btn-primary" type="submit" value="Change name">
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            {% endif %}
-            <div class="container b-user_username">
-                <div class="row">
-                    {% if 'user' in request.get_full_path %}
-                        <div class="col-xs-8">
-                            <h2>{{ user_profile.first_name }} {{ user_profile.last_name }}</h2>
-                        </div>
-                        <div class="col-xs-3">
-
-                            <button type="button" class="btn btn-default change-username-button" aria-label="Left Align">
-                                <span class="glyphicon glyphicon glyphicon-cog" aria-hidden="true"></span>
-                                Change
-                            </button>
-
-                        </div>
-                    {% else %}
-                        <div class="col-xs-12">
-                            <h2>{{ user_profile.first_name }} {{ user_profile.last_name }}</h2>
-                        </div>
-                    {% endif %}
-                </div>
-            </div>
-            
-        {% endif %}
-    {% endblock %}
 </div>

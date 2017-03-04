@@ -1,4 +1,4 @@
-#!/home/zerts/MIPT/hackUPC/HackUPC2017/hackupc/env/bin/python
+#!/home/zerts/MIPT/hackUPC/HackUPC2017/hackupc/env/bin/python3
 from django.core import management
 
 if __name__ == "__main__":
