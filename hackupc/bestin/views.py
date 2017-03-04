@@ -23,8 +23,12 @@ def get_user_score(request):
     return JsonResponse(json.dumps(str(Activity.objects.filter(user_id=request.user).aggregate(Sum('score')))), safe=False)
 
 def get_top_scores(request):
-    scores = Activity.objects.values('user_id').annotate(total_score=Sum('score'))
-    return JsonResponse(json.dumps(list(scores)), safe=False)
+    scores = Activity.objects.select_related('user_id').values('user_id__username').annotate(total_score=Sum('score'))
+    highscores = []
+    for score in scores:
+        print(score)
+        highscores.append(score)
+    return JsonResponse(json.dumps(highscores), safe=False)
 
 def logout(request):
     auth_logout(request)

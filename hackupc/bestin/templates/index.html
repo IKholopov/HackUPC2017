@@ -3,8 +3,8 @@
 
 {% block content %}
 
-    <link rel="stylesheet" href="https://js.arcgis.com/4.3/esri/css/main.css">
-    <script src="https://js.arcgis.com/4.3/"></script>
+    <link rel="stylesheet" href="https://js.arcgis.com/3.20/esri/css/esri.css">
+    <script src="https://js.arcgis.com/3.20/"></script>
 
     <script>
         window.smoothScroll = function(target) {
@@ -31,47 +31,46 @@
         }
     </script>
 
-    <script>
+    <script type="text/javascript">
+        var featureLayer;
         require([
-                    "esri/Map",
-                    "esri/views/MapView",
-
+                    "esri/map",
                     "esri/layers/FeatureLayer",
 
                     "dojo/domReady!"
                 ],
                 function(
-                        Map, MapView,
-                        FeatureLayer
+                        Map, FeatureLayer
                 ) {
 
-                    var map = new Map({
-                        basemap: "hybrid"
+                    var map = new Map("viewDiv", {
+                        basemap: "hybrid",
+                        center: [0, 0],
+                        zoom: 1
                     });
 
-                    var view = new MapView({
-                        container: "viewDiv",
-                        map: map,
-
-                        extent: { // autocasts as new Extent()
-                            xmin: -9177811,
-                            ymin: 4247000,
-                            xmax: -9176791,
-                            ymax: 4247784,
-                            spatialReference: 102100
-                        }
-                    });
+                    // var view = new MapView({
+                    //     container: "viewDiv",
+                    //     map: map,
+                    //
+                    //     extent: { // autocasts as new Extent()
+                    //         xmin: -9177811,
+                    //         ymin: 4247000,
+                    //         xmax: -9176791,
+                    //         ymax: 4247784,
+                    //         spatialReference: 102100
+                    //     }
+                    // });
 
                     /********************
                      * Add feature layer
                      ********************/
 
                             // Carbon storage of trees in Warren Wilson College.
-                    var featureLayer = new FeatureLayer({
-                                url: "https://services.arcgis.com/V6ZHFr6zdgNZuVG0/arcgis/rest/services/Landscape_Trees/FeatureServer/0"
-                            });
+                    featureLayer = new FeatureLayer("https://services7.arcgis.com/0MAMn0h8N3f8X276/arcgis/rest/services/Social_Activity/FeatureServer/0");
 
-                    map.add(featureLayer);
+                    map.addLayer(featureLayer);
+
 
                 });
     </script>
