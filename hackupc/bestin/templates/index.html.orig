@@ -3,13 +3,24 @@
 
 {% block content %}
 
+<<<<<<< HEAD
     <link rel="stylesheet" href="https://js.arcgis.com/4.3/esri/css/main.css">
+    <script src="../../static/js/plotly-latest.min.js"></script>
     <script  type="text/javascript" src="https://js.arcgis.com/4.3/"></script>
     <script  type="text/javascript" src="https://d3js.org/d3.v4.min.js"></script>
+    <script  type="text/javascript" src="https://cdn.plot.ly/plotly-1.2.0.min.js"></script>
+
+    <link rel="stylesheet" href="../../static/js/xcharts.min.css">
+    <script src="../../static/js/xcharts.min.js"></script>
+
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="../../static/malihu-custom-scrollbar-plugin-master/jquery.mCustomScrollbar.concat.min.js"></script>
+=======
+    <link rel="stylesheet" href="https://js.arcgis.com/3.20/esri/css/esri.css">
+    <script src="https://js.arcgis.com/3.20/"></script>
+>>>>>>> 3539d86e2dd07abbfa19e2f7322f2666facc9dd7
 
     <script>
-        $ = jQuery;
-
         window.smoothScroll = function(target) {
             var scrollContainer = target;
             do { //find scroll container
@@ -31,114 +42,110 @@
             };
             // start scrolling
             scroll(scrollContainer, scrollContainer.scrollTop, targetY, 0);
-        }
+        };
     </script>
 
-    {#    <script type="text/javascript">#}
-    {#        var featureLayer;#}
-    {#        require([#}
-    {#                    "esri/map",#}
-    {#                    "esri/layers/FeatureLayer",#}
-    {##}
-    {#                    "dojo/domReady!"#}
-    {#                ],#}
-    {#                function(#}
-    {#                        Map, FeatureLayer#}
-    {#                ) {#}
-    {##}
-    {#                    var map = new Map("viewDiv", {#}
-    {#                        basemap: "hybrid",#}
-    {#                        center: [0, 0],#}
-    {#                        zoom: 1#}
-    {#                    });#}
-    {##}
-    {#                    // var view = new MapView({#}
-    {#                    //     container: "viewDiv",#}
-    {#                    //     map: map,#}
-    {#                    //#}
-    {#                    //     extent: { // autocasts as new Extent()#}
-    {#                    //         xmin: -9177811,#}
-    {#                    //         ymin: 4247000,#}
-    {#                    //         xmax: -9176791,#}
-    {#                    //         ymax: 4247784,#}
-    {#                    //         spatialReference: 102100#}
-    {#                    //     }#}
-    {#                    // });#}
-    {##}
-    {#                    /********************#}
-    {#                     * Add feature layer#}
-    {#                     ********************/#}
-    {##}
-    {#                    // Carbon storage of trees in Warren Wilson College.#}
-    {#                    featureLayer = new FeatureLayer("https://services7.arcgis.com/0MAMn0h8N3f8X276/arcgis/rest/services/Social_Activity/FeatureServer/0");#}
-    {##}
-    {#                    map.addLayer(featureLayer);#}
-    {##}
-    {##}
-    {#                });#}
-    {#    </script>#}
+    <script type="text/javascript">
+        var featureLayer;
+        require([
+                    "esri/map",
+                    "esri/layers/FeatureLayer",
+
+                    "dojo/domReady!"
+                ],
+                function(
+                        Map, FeatureLayer
+                ) {
+
+                    var map = new Map("viewDiv", {
+                        basemap: "hybrid",
+                        center: [0, 0],
+                        zoom: 1
+                    });
+
+                    // var view = new MapView({
+                    //     container: "viewDiv",
+                    //     map: map,
+                    //
+                    //     extent: { // autocasts as new Extent()
+                    //         xmin: -9177811,
+                    //         ymin: 4247000,
+                    //         xmax: -9176791,
+                    //         ymax: 4247784,
+                    //         spatialReference: 102100
+                    //     }
+                    // });
+
+                    /********************
+                     * Add feature layer
+                     ********************/
+
+                            // Carbon storage of trees in Warren Wilson College.
+                    featureLayer = new FeatureLayer("https://services7.arcgis.com/0MAMn0h8N3f8X276/arcgis/rest/services/Social_Activity/FeatureServer/0");
+
+                    map.addLayer(featureLayer);
+
+
+                });
+    </script>
 
     <script src="http://canvasjs.com/assets/script/canvasjs.min.js"></script>
     <script type="text/javascript">
-
-
         window.onload = function () {
-            $('#user-avatar').height($('#user-avatar').width());
-            renderCharts();
-        };
+            var chart = new CanvasJS.Chart("chartContainer", {
+                backgroundColor: "transparent",
+                animationEnabled: true,
+                axisY: {
+                    tickThickness: 0,
+                    lineThickness: 0,
+                    valueFormatString: " ",
+                    gridThickness: 0
+                },
+                axisX: {
+                    tickThickness: 0,
+                    lineThickness: 0,
+                    labelFontSize: 18,
+                    labelFontColor: "Peru"
 
-        function renderCharts() {
-            var scores;
-            jQuery.getJSON('/topscore', function (data) {
-                var dataPoints = [];
-                var scores = JSON.parse(data);
-                for (value = 0; value < scores.length; value++) {
-                    dataPoints.push({y: parseInt(scores[value]["total_score"]), label: scores[value]["total_score"], indexLabel: scores[value]["user_id__username"]});
-                }
+                },
+                data: [
+                    {
+                        indexLabelFontSize: 26,
+                        toolTipContent: "<span style='\"'color: {color};'\"'><strong>{indexLabel}</strong></span><span style='\"'font-size: 20px; color:peru '\"'><strong>{y}</strong></span>",
 
-                $('#chartContainer').height((1000 * dataPoints.length) + "px");
+                        indexLabelPlacement: "inside",
+                        indexLabelFontColor: "white",
+                        indexLabelFontWeight: 600,
+                        indexLabelFontFamily: "Verdana",
+                        color: "#62C9C3",
+                        type: "bar",
+                        dataPoints: [
+                            { y: 21, label: "21%", indexLabel: "Video" },
+                            { y: 25, label: "25%", indexLabel: "Dining" },
+                            { y: 33, label: "33%", indexLabel: "Entertainment" },
+                            { y: 36, label: "36%", indexLabel: "News" },
+                            { y: 42, label: "42%", indexLabel: "Music" },
+                            { y: 49, label: "49%", indexLabel: "Social Networking" },
+                            { y: 50, label: "50%", indexLabel: "Maps/ Search" },
+                            { y: 55, label: "55%", indexLabel: "Weather" },
+                            { y: 61, label: "61%", indexLabel: "Games" }
 
-                var chart = new CanvasJS.Chart("chartContainer", {
-                    backgroundColor: "transparent",
-                    animationEnabled: true,
-                    dataPointWidth: 30,
-                    axisY: {
-                        tickThickness: 0,
-                        lineThickness: 0,
-                        valueFormatString: " ",
-                        gridThickness: 0
-                    },
-                    axisX: {
-                        tickThickness: 0,
-                        lineThickness: 0,
-                        labelFontSize: 18,
-                        labelFontColor: "Peru"
 
-                    },
-                    data: [
-                        {
-                            indexLabelFontSize: 20,
-                            toolTipContent: "<span style='\"'color: {color};'\"'><strong>{indexLabel}</strong></span><span style='\"'font-size: 15px; color:peru '\"'><strong>{y}</strong></span>",
-                            indexLabelPlacement: "inside",
-                            indexLabelFontColor: "white",
-                            indexLabelFontWeight: 100,
-                            indexLabelFontFamily: "Verdana",
-                            color: "#62C9C3",
-                            type: "bar",
-                            dataPoints: dataPoints
-                        }
-                    ]
-                });
-                chart.render();
+                        ]
+                    }
+                ]
             });
-        }
 
-        function scrollChart() {
-
-            $("#scroll-container").animate({
-                scrollTop: '+=50'
-            }, 800);
+            chart.render();
         }
+    </script>
+
+    <script>
+        (function($){
+            $(window).on("load",function(){
+                $(".content").mCustomScrollbar();
+            });
+        })(jQuery);
     </script>
 
     <style>
@@ -169,31 +176,9 @@
 
         }
 
-        .show_me_button {
-            height: 100px;
-            width: 100px;
-            margin-left: auto;
-            margin-right: auto;
-            padding-top: 12px;
-            margin-bottom: 70%;
-            text-align: center;
-        }
-        .show_me_button:hover {
-            border-radius: 50px;
-            border-color: #fff7ff;
-            border-style: solid;
-            border-width: 3px;
-            padding-top: 9px;
-
-        }
-
         .header-info {
             margin-top: 30px;
             height: 20%;
-        }
-
-        .logo img {
-
         }
 
     </style>
@@ -220,14 +205,14 @@
                         <div class="row header-info">
                             <div class="col-md-2">
                                 <div class="logo" style="height: 150px; width: 150px; margin-left: auto; margin-right: auto">
-                                    <img src="../../static/logo.png" height=100% width=100%>
+                                    <img src="../../static/about.png" height=100% width=100%>
                                 </div>
                             </div>
                             <div class="col-md-4" style="text-align: left">
                                 <h1 style="color: #000000">Our webservice name</h1>
                             </div>
                             <div class="col-md-5" style="text-align: right">
-                                <h3  style="color: #000000">Are you ready to be good?<br> World is waiting!</h3>
+                                <h3  style="color: #000000">Are you ready to be good? <br> World is waiting!</h3>
                             </div>
                         </div>
                         <div class="row" style="text-align: center">
@@ -236,16 +221,10 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-md-2">
-                                <div class="about-button show_me_button" onclick="scrollChart()">
-                                    <img src="../../static/about.png" height='48' width="48" style="margin-left: 3px">
-                                    <br>
-                                    Show me
-                                </div>
-                            </div>
+                            <div class="col-md-2"></div>
                             <div class="col-md-9">
-                                <div id="scroll-container" style="overflow:scroll; height:600px; overflow-x: hidden;">
-                                    <div id="chartContainer" style="width: 100%;"></div>
+                                <div id="" style="overflow:scroll; height:700px; overflow-x: hidden;">
+                                    <div id="chartContainer" style="height: 1800px; width: 100%;"></div>
                                 </div>
                             </div>
                         </div>
@@ -255,6 +234,7 @@
                     <div class="container">
                         <div class="row" style="height: 100%">
                             <div class="col-md-3">
+
                             </div>
                             <div class="col-md-9" style="height: 100%">
                                 <div id="viewDiv" style="margin-top: 7%; width: 100%; height: 90%;"></div>
