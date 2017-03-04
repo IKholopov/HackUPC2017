@@ -1,0 +1,13 @@
+<div class="b-insta-login-card">
+    {% load static %}
+    {% load widget_tweaks %}
+    <link rel="stylesheet" type="text/css" href='../../static/css/loginCardInstagram.css'>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-2" id="insta-icon" ><img src="../../static/instagram.png"></div>
+            <div class="col-md-10" id="insta-name">
+                <h5>{{ request.user.username }} </h5>
+            </div>
+        </div>
+    </div>
+</div>

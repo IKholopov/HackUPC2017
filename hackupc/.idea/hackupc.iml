@@ -19,6 +19,10 @@
     <orderEntry type="library" name="react-dom" level="application" />
     <orderEntry type="library" name="babel" level="application" />
     <orderEntry type="library" name="jquery-3.1.1.slim" level="application" />
+    <orderEntry type="library" name="plotly-1.2.0" level="application" />
+    <orderEntry type="library" name="d3.v4" level="application" />
+    <orderEntry type="library" name="require" level="application" />
+    <orderEntry type="library" name="canvasjs" level="application" />
   </component>
   <component name="TemplatesService">
     <option name="TEMPLATE_CONFIGURATION" value="Django" />
