@@ -1,18 +1,33 @@
+<script type="text/javascript">
+
+</script>
+
 <div class="b-user_side_menu">
     {% load static %}
     {% load widget_tweaks %}
     <link rel="stylesheet" type="text/css" href='../../static/css/sideMenu.css'>
-    <div class="b-user-info">
-        <div class="container">
+    <div class="b-user-info" style="height: 100%">
+        <div class="container" style="height: 100%">
             <div class="row">
                 {% if request.user.is_authenticated %}
-                    <img src="../../static/Tp3aR75sX5g.jpg" alt="Avatar"> <br>
-                    {% include "loginCardFacebook.html" %}
-                    {% include "loginCardTwitter.html" %}
+                    <img id="user-avatar" src="../../static/Tp3aR75sX5g.jpg" alt="Avatar"> <br>
+                    </div>
+                    <div class="row">
+                        <div class="rating" style="text-align: center; width: 100%; margin-top: 30px; margin-bottom: 200px">
+                            <h1> 1202 </h1>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="networks" style="text-align: center; width: 100%">
+                            {% include "loginCardFacebook.html" %}
+                            {% include "loginCardTwitter.html" %}
+                            {% include "loginCardInstagram.html" %}
+                        </div>
+                    </div>
                 {% else %}
+                    </div>
                     {% include "loginCard.html" %}
                 {% endif %}
-            </div>
         </div>
     </div>
 </div>

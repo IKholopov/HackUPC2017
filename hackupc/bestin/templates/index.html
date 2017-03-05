@@ -6,42 +6,45 @@
     <link rel="stylesheet" href="https://js.arcgis.com/3.20/dijit/themes/claro/claro.css">
     <link rel="stylesheet" href="https://js.arcgis.com/3.20/esri/css/esri.css">
     <script src="https://js.arcgis.com/3.20/"></script>
+    <script src="http://canvasjs.com/assets/script/canvasjs.min.js"></script>
 
     <style>
-    .esriScalebar {
-      padding: 20px 20px;
-    }
+        .esriScalebar {
+            padding: 20px 20px;
+        }
 
-    .esriPopup.myTheme .titlePane,
-    .dj_ie7 .esriPopup.myTheme .titlePane .title {
-      background-color: #899752;
-      color: #333333;
-      font-weight: bold;
-    }
+        .esriPopup.myTheme .titlePane,
+        .dj_ie7 .esriPopup.myTheme .titlePane .title {
+            background-color: #899752;
+            color: #333333;
+            font-weight: bold;
+        }
 
-    .esriPopup.myTheme .titlePane {
-      border-bottom: 1px solid #121310;
-    }
+        .esriPopup.myTheme .titlePane {
+            border-bottom: 1px solid #121310;
+        }
 
-    .esriPopup.myTheme a {
-      color: #d6e68a;
-    }
-    .esriPopup.myTheme .pointer.top{
-      background-color:#899752;
-    }
-    .esriPopup.myTheme .outerPointer,  .esriPopup.myTheme .pointer.bottom{
-      background-color:#424242;
-    }
+        .esriPopup.myTheme a {
+            color: #d6e68a;
+        }
+        .esriPopup.myTheme .pointer.top{
+            background-color:#899752;
+        }
+        .esriPopup.myTheme .outerPointer,  .esriPopup.myTheme .pointer.bottom{
+            background-color:#424242;
+        }
 
-    .esriPopup.myTheme .contentPane,
-    .esriPopup.myTheme .actionsPane {
-      border-color: 1px solid #121310;
-      background-color: #424242;
-      color: #ffffff;
-    }
-  </style>
+        .esriPopup.myTheme .contentPane,
+        .esriPopup.myTheme .actionsPane {
+            border-color: 1px solid #121310;
+            background-color: #424242;
+            color: #ffffff;
+        }
+    </style>
 
     <script>
+        $ = jQuery;
+
         window.smoothScroll = function(target) {
             var scrollContainer = target;
             do { //find scroll container
@@ -69,37 +72,37 @@
     <script type="text/javascript">
         var featureLayer;
         require([
-          "esri/config",
-          "esri/InfoTemplate",
-          "esri/map",
-          "esri/dijit/Popup",
-          "esri/dijit/PopupTemplate",
-          "esri/geometry/Extent",
-          "esri/layers/FeatureLayer",
-          "esri/layers/ArcGISTiledMapServiceLayer",
-          "esri/symbols/SimpleFillSymbol",
-          "esri/symbols/SimpleLineSymbol",
-          "esri/tasks/GeometryService",
-          "esri/tasks/query",
-          "dojo/dom-construct",
-          "dojo/dom-class",
-          "dojo/parser",
-          "esri/Color",
-          "dojo/_base/lang",
-          "dojo/date/locale",
-          "dojo/domReady!"
+                    "esri/config",
+                    "esri/InfoTemplate",
+                    "esri/map",
+                    "esri/dijit/Popup",
+                    "esri/dijit/PopupTemplate",
+                    "esri/geometry/Extent",
+                    "esri/layers/FeatureLayer",
+                    "esri/layers/ArcGISTiledMapServiceLayer",
+                    "esri/symbols/SimpleFillSymbol",
+                    "esri/symbols/SimpleLineSymbol",
+                    "esri/tasks/GeometryService",
+                    "esri/tasks/query",
+                    "dojo/dom-construct",
+                    "dojo/dom-class",
+                    "dojo/parser",
+                    "esri/Color",
+                    "dojo/_base/lang",
+                    "dojo/date/locale",
+                    "dojo/domReady!"
                 ],
                 function(
-                  esriConfig, InfoTemplate, Map, Popup, PopupTemplate, Extent, FeatureLayer,
-                  ArcGISTiledMapServiceLayer, SimpleFillSymbol, SimpleLineSymbol,
-                  GeometryService, Query, domConstruct, domClass, parser, Color, lang, locale
+                        esriConfig, InfoTemplate, Map, Popup, PopupTemplate, Extent, FeatureLayer,
+                        ArcGISTiledMapServiceLayer, SimpleFillSymbol, SimpleLineSymbol,
+                        GeometryService, Query, domConstruct, domClass, parser, Color, lang, locale
                 ) {
                     parser.parse()
                     var popup = new Popup({
-                            fillSymbol: new SimpleFillSymbol(SimpleFillSymbol.STYLE_SOLID,
-                              new SimpleLineSymbol(SimpleLineSymbol.STYLE_SOLID,
-                                new Color([255, 0, 0]), 2), new Color([255, 255, 0, 0.25]))
-                          }, domConstruct.create("div"));
+                        fillSymbol: new SimpleFillSymbol(SimpleFillSymbol.STYLE_SOLID,
+                                new SimpleLineSymbol(SimpleLineSymbol.STYLE_SOLID,
+                                        new Color([255, 0, 0]), 2), new Color([255, 255, 0, 0.25]))
+                    }, domConstruct.create("div"));
                     domClass.add(popup.domNode, "myTheme");
 
                     var map = new Map("viewDiv", {
@@ -108,16 +111,16 @@
                         zoom: 2
                     });
                     map.on("click", function (event) {
-                          var query = new Query();
-                          query.geometry = pointToExtent(map, event.mapPoint, 10);
-                          var deferred = featureLayer.selectFeatures(query,
-                            FeatureLayer.SELECTION_NEW);
-                          map.infoWindow.setFeatures([deferred]);
-                          map.infoWindow.show(event.mapPoint);
-                        });
-                      var template = new InfoTemplate();
-                      template.setContent(getTextContent);
-                      template.setTitle(function getTextContent (graphic) {return ''});
+                        var query = new Query();
+                        query.geometry = pointToExtent(map, event.mapPoint, 10);
+                        var deferred = featureLayer.selectFeatures(query,
+                                FeatureLayer.SELECTION_NEW);
+                        map.infoWindow.setFeatures([deferred]);
+                        map.infoWindow.show(event.mapPoint);
+                    });
+                    var template = new InfoTemplate();
+                    template.setContent(getTextContent);
+                    template.setTitle(function getTextContent (graphic) {return ''});
 
                     // var view = new MapView({
                     //     container: "viewDiv",
@@ -136,44 +139,104 @@
                      * Add feature layer
                      ********************/
 
-                            // Carbon storage of trees in Warren Wilson College.
+                    // Carbon storage of trees in Warren Wilson College.
                     featureLayer = new FeatureLayer(
-                      "https://services7.arcgis.com/0MAMn0h8N3f8X276/arcgis/rest/services/Social_Activity/FeatureServer/0",
-                      {
-                        mode: FeatureLayer.MODE_SNAPSHOT,
-                        outFields: ["*"],
-                        infoTemplate: template
-                      });
+                            "https://services7.arcgis.com/0MAMn0h8N3f8X276/arcgis/rest/services/Social_Activity/FeatureServer/0",
+                            {
+                                mode: FeatureLayer.MODE_SNAPSHOT,
+                                outFields: ["*"],
+                                infoTemplate: template
+                            });
 
                     map.addLayer(featureLayer);
                     function getTextContent (graphic) {
-                      var attributes = graphic.attributes;
-                      var message =
-                        attributes.text;
+                        var attributes = graphic.attributes;
+                        var message =
+                                attributes.text;
 
-                      return  message;
+                        return  message;
                     }
 
                     function formatDate (value) {
-                      var inputDate = new Date(value);
-                      return locale.format(inputDate, {
-                        selector: 'date',
-                        datePattern: 'MMMM d, y'
-                      });
+                        var inputDate = new Date(value);
+                        return locale.format(inputDate, {
+                            selector: 'date',
+                            datePattern: 'MMMM d, y'
+                        });
                     }
 
                     function pointToExtent (map, point, toleranceInPixel) {
-                      var pixelWidth = map.extent.getWidth() / map.width;
-                      var toleranceInMapCoords = toleranceInPixel * pixelWidth;
-                      return new Extent(point.x - toleranceInMapCoords,
-                                        point.y - toleranceInMapCoords,
-                                        point.x + toleranceInMapCoords,
-                                        point.y + toleranceInMapCoords,
-                                        map.spatialReference);
+                        var pixelWidth = map.extent.getWidth() / map.width;
+                        var toleranceInMapCoords = toleranceInPixel * pixelWidth;
+                        return new Extent(point.x - toleranceInMapCoords,
+                                point.y - toleranceInMapCoords,
+                                point.x + toleranceInMapCoords,
+                                point.y + toleranceInMapCoords,
+                                map.spatialReference);
                     }
 
                 });
+
+        window.onload = function () {
+            $('#user-avatar').height($('#user-avatar').width());
+            renderCharts();
+        };
+
+        function renderCharts() {
+            var scores;
+            jQuery.getJSON('/topscore', function (data) {
+                var dataPoints = [];
+                var scores = JSON.parse(data);
+                for (value = 0; value < scores.length; value++) {
+                    dataPoints.push({y: parseInt(scores[value]["total_score"]), label: scores[value]["total_score"], indexLabel: scores[value]["user_id__username"]});
+                }
+                console.log(dataPoints);
+
+                $('#chartContainer').height((50 * dataPoints.length) + "px");
+
+                var chart = new CanvasJS.Chart("chartContainer", {
+                    backgroundColor: "transparent",
+                    animationEnabled: true,
+                    dataPointWidth: 30,
+                    axisY: {
+                        tickThickness: 0,
+                        lineThickness: 0,
+                        valueFormatString: " ",
+                        gridThickness: 0
+                    },
+                    axisX: {
+                        tickThickness: 0,
+                        lineThickness: 0,
+                        labelFontSize: 18,
+                        labelFontColor: "Peru"
+
+                    },
+                    data: [
+                        {
+                            indexLabelFontSize: 20,
+                            toolTipContent: "<span style='\"'color: {color};'\"'><strong>{indexLabel}</strong></span><span style='\"'font-size: 15px; color:peru '\"'><strong>{y}</strong></span>",
+                            indexLabelPlacement: "inside",
+                            indexLabelFontColor: "white",
+                            indexLabelFontWeight: 100,
+                            indexLabelFontFamily: "Verdana",
+                            color: "#62C9C3",
+                            type: "bar",
+                            dataPoints: dataPoints
+                        }
+                    ]
+                });
+                chart.render();
+            });
+        }
+
+        function scrollChart() {
+
+            $("#scroll-container").animate({
+                scrollTop: '+=50'
+            }, 800);
+        }
     </script>
+
     <style>
 
 
@@ -202,6 +265,33 @@
 
         }
 
+        .show_me_button {
+            height: 100px;
+            width: 100px;
+            margin-left: auto;
+            margin-right: auto;
+            padding-top: 12px;
+            margin-bottom: 70%;
+            text-align: center;
+        }
+        .show_me_button:hover {
+            border-radius: 50px;
+            border-color: #fff7ff;
+            border-style: solid;
+            border-width: 3px;
+            padding-top: 9px;
+
+        }
+
+        .header-info {
+            margin-top: 30px;
+            height: 20%;
+        }
+
+        .logo img {
+
+        }
+
     </style>
 
     <div class="background-image"></div>
@@ -221,8 +311,41 @@
                 </div>
             </div>
             <div class="col-md-10 content" style="margin-left: 0">
-                <div class="row" id="rating-view" style=" width: 100%; height: 100%; background-color: #eaeaea">
-
+                <div class="row" id="rating-view" style=" width: 100%; height: 100%;">
+                    <div class="container" style="width: 100%">
+                        <div class="row header-info">
+                            <div class="col-md-2">
+                                <div class="logo" style="height: 150px; width: 150px; margin-left: auto; margin-right: auto">
+                                    <img src="../../static/logo.png" height=100% width=100%>
+                                </div>
+                            </div>
+                            <div class="col-md-4" style="text-align: left">
+                                <h1 style="color: #000000">Our webservice name</h1>
+                            </div>
+                            <div class="col-md-5" style="text-align: right">
+                                <h3  style="color: #000000">Are you ready to be good?<br> World is waiting!</h3>
+                            </div>
+                        </div>
+                        <div class="row" style="text-align: center">
+                            <div class="col-md-12">
+                                <h1>Rating</h1>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-2">
+                                <div class="about-button show_me_button" onclick="scrollChart()">
+                                    <img src="../../static/about.png" height='48' width="48" style="margin-left: 3px">
+                                    <br>
+                                    Show me
+                                </div>
+                            </div>
+                            <div class="col-md-9">
+                                <div id="scroll-container" style="overflow:scroll; height:600px; overflow-x: hidden;">
+                                    <div id="chartContainer" style="width: 100%;"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <div class="row" id="map-view" style=" width: 100%; height: 100%; background-color: #0d3349">
                     <div class="container">
@@ -247,4 +370,6 @@
         </div>
     </div>
     <script type="text/babel" src="../../static/app.jsx"></script>
+    <script>
+    </script>
 {% endblock %}

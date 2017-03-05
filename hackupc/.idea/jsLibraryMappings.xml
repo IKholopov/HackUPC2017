@@ -2,7 +2,7 @@
 <project version="4">
   <component name="JavaScriptLibraryMappings">
     <file url="file://$PROJECT_DIR$" libraries="{hackupc/node_modules}" />
-    <file url="PROJECT" libraries="{babel, jquery-3.1.1.slim, react, react-dom}" />
+    <file url="PROJECT" libraries="{babel, canvasjs, d3.v4, jquery-3.1.1.slim, plotly-1.2.0, react, react-dom, require}" />
     <includedPredefinedLibrary name="ECMAScript 6" />
   </component>
 </project>

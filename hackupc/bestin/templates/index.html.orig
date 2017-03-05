@@ -1,0 +1,425 @@
+{% extends "base.html" %}}
+
+
+{% block content %}
+
+<<<<<<< HEAD
+    <link rel="stylesheet" href="https://js.arcgis.com/4.3/esri/css/main.css">
+    <script  type="text/javascript" src="https://js.arcgis.com/4.3/"></script>
+    <script  type="text/javascript" src="https://d3js.org/d3.v4.min.js"></script>
+=======
+    <link rel="stylesheet" href="https://js.arcgis.com/3.20/dijit/themes/claro/claro.css">
+    <link rel="stylesheet" href="https://js.arcgis.com/3.20/esri/css/esri.css">
+    <script src="https://js.arcgis.com/3.20/"></script>
+>>>>>>> 34df334de47f1150492d87b0bbb69f524e11d9b1
+
+    <style>
+    .esriScalebar {
+      padding: 20px 20px;
+    }
+
+    .esriPopup.myTheme .titlePane,
+    .dj_ie7 .esriPopup.myTheme .titlePane .title {
+      background-color: #899752;
+      color: #333333;
+      font-weight: bold;
+    }
+
+    .esriPopup.myTheme .titlePane {
+      border-bottom: 1px solid #121310;
+    }
+
+    .esriPopup.myTheme a {
+      color: #d6e68a;
+    }
+    .esriPopup.myTheme .pointer.top{
+      background-color:#899752;
+    }
+    .esriPopup.myTheme .outerPointer,  .esriPopup.myTheme .pointer.bottom{
+      background-color:#424242;
+    }
+
+    .esriPopup.myTheme .contentPane,
+    .esriPopup.myTheme .actionsPane {
+      border-color: 1px solid #121310;
+      background-color: #424242;
+      color: #ffffff;
+    }
+  </style>
+
+    <script>
+        $ = jQuery;
+
+        window.smoothScroll = function(target) {
+            var scrollContainer = target;
+            do { //find scroll container
+                scrollContainer = scrollContainer.parentNode;
+                if (!scrollContainer) return;
+                scrollContainer.scrollTop += 1;
+            } while (scrollContainer.scrollTop == 0);
+
+            var targetY = 0;
+            do { //find the top of target relatively to the container
+                if (target == scrollContainer) break;
+                targetY += target.offsetTop;
+            } while (target = target.offsetParent);
+
+            scroll = function(c, a, b, i) {
+                i++; if (i > 30) return;
+                c.scrollTop = a + (b - a) / 30 * i;
+                setTimeout(function(){ scroll(c, a, b, i); }, 20);
+            };
+            // start scrolling
+            scroll(scrollContainer, scrollContainer.scrollTop, targetY, 0);
+        }
+    </script>
+
+    {#    <script type="text/javascript">#}
+    {#        var featureLayer;#}
+    {#        require([#}
+    {#                    "esri/map",#}
+    {#                    "esri/layers/FeatureLayer",#}
+    {##}
+    {#                    "dojo/domReady!"#}
+    {#                ],#}
+    {#                function(#}
+    {#                        Map, FeatureLayer#}
+    {#                ) {#}
+    {##}
+    {#                    var map = new Map("viewDiv", {#}
+    {#                        basemap: "hybrid",#}
+    {#                        center: [0, 0],#}
+    {#                        zoom: 1#}
+    {#                    });#}
+    {##}
+    {#                    // var view = new MapView({#}
+    {#                    //     container: "viewDiv",#}
+    {#                    //     map: map,#}
+    {#                    //#}
+    {#                    //     extent: { // autocasts as new Extent()#}
+    {#                    //         xmin: -9177811,#}
+    {#                    //         ymin: 4247000,#}
+    {#                    //         xmax: -9176791,#}
+    {#                    //         ymax: 4247784,#}
+    {#                    //         spatialReference: 102100#}
+    {#                    //     }#}
+    {#                    // });#}
+    {##}
+    {#                    /********************#}
+    {#                     * Add feature layer#}
+    {#                     ********************/#}
+    {##}
+    {#                    // Carbon storage of trees in Warren Wilson College.#}
+    {#                    featureLayer = new FeatureLayer("https://services7.arcgis.com/0MAMn0h8N3f8X276/arcgis/rest/services/Social_Activity/FeatureServer/0");#}
+    {##}
+    {#                    map.addLayer(featureLayer);#}
+    {##}
+    {##}
+    {#                });#}
+    {#    </script>#}
+
+    <script src="http://canvasjs.com/assets/script/canvasjs.min.js"></script>
+    <script type="text/javascript">
+<<<<<<< HEAD
+
+=======
+        var featureLayer;
+        require([
+          "esri/config",
+          "esri/InfoTemplate",
+          "esri/map",
+          "esri/dijit/Popup",
+          "esri/dijit/PopupTemplate",
+          "esri/geometry/Extent",
+          "esri/layers/FeatureLayer",
+          "esri/layers/ArcGISTiledMapServiceLayer",
+          "esri/symbols/SimpleFillSymbol",
+          "esri/symbols/SimpleLineSymbol",
+          "esri/tasks/GeometryService",
+          "esri/tasks/query",
+          "dojo/dom-construct",
+          "dojo/dom-class",
+          "dojo/parser",
+          "esri/Color",
+          "dojo/_base/lang",
+          "dojo/date/locale",
+          "dojo/domReady!"
+                ],
+                function(
+                  esriConfig, InfoTemplate, Map, Popup, PopupTemplate, Extent, FeatureLayer,
+                  ArcGISTiledMapServiceLayer, SimpleFillSymbol, SimpleLineSymbol,
+                  GeometryService, Query, domConstruct, domClass, parser, Color, lang, locale
+                ) {
+                    parser.parse()
+                    var popup = new Popup({
+                            fillSymbol: new SimpleFillSymbol(SimpleFillSymbol.STYLE_SOLID,
+                              new SimpleLineSymbol(SimpleLineSymbol.STYLE_SOLID,
+                                new Color([255, 0, 0]), 2), new Color([255, 255, 0, 0.25]))
+                          }, domConstruct.create("div"));
+                    domClass.add(popup.domNode, "myTheme");
+
+                    var map = new Map("viewDiv", {
+                        basemap: "hybrid",
+                        center: [0, 0],
+                        zoom: 2
+                    });
+                    map.on("click", function (event) {
+                          var query = new Query();
+                          query.geometry = pointToExtent(map, event.mapPoint, 10);
+                          var deferred = featureLayer.selectFeatures(query,
+                            FeatureLayer.SELECTION_NEW);
+                          map.infoWindow.setFeatures([deferred]);
+                          map.infoWindow.show(event.mapPoint);
+                        });
+                      var template = new InfoTemplate();
+                      template.setContent(getTextContent);
+                      template.setTitle(function getTextContent (graphic) {return ''});
+
+                    // var view = new MapView({
+                    //     container: "viewDiv",
+                    //     map: map,
+                    //
+                    //     extent: { // autocasts as new Extent()
+                    //         xmin: -9177811,
+                    //         ymin: 4247000,
+                    //         xmax: -9176791,
+                    //         ymax: 4247784,
+                    //         spatialReference: 102100
+                    //     }
+                    // });
+
+                    /********************
+                     * Add feature layer
+                     ********************/
+
+                            // Carbon storage of trees in Warren Wilson College.
+                    featureLayer = new FeatureLayer(
+                      "https://services7.arcgis.com/0MAMn0h8N3f8X276/arcgis/rest/services/Social_Activity/FeatureServer/0",
+                      {
+                        mode: FeatureLayer.MODE_SNAPSHOT,
+                        outFields: ["*"],
+                        infoTemplate: template
+                      });
+
+                    map.addLayer(featureLayer);
+                    function getTextContent (graphic) {
+                      var attributes = graphic.attributes;
+                      var message =
+                        attributes.text;
+
+                      return  message;
+                    }
+
+                    function formatDate (value) {
+                      var inputDate = new Date(value);
+                      return locale.format(inputDate, {
+                        selector: 'date',
+                        datePattern: 'MMMM d, y'
+                      });
+                    }
+
+                    function pointToExtent (map, point, toleranceInPixel) {
+                      var pixelWidth = map.extent.getWidth() / map.width;
+                      var toleranceInMapCoords = toleranceInPixel * pixelWidth;
+                      return new Extent(point.x - toleranceInMapCoords,
+                                        point.y - toleranceInMapCoords,
+                                        point.x + toleranceInMapCoords,
+                                        point.y + toleranceInMapCoords,
+                                        map.spatialReference);
+                    }
+>>>>>>> 34df334de47f1150492d87b0bbb69f524e11d9b1
+
+        window.onload = function () {
+            $('#user-avatar').height($('#user-avatar').width());
+            renderCharts();
+        };
+
+        function renderCharts() {
+            var scores;
+            jQuery.getJSON('/topscore', function (data) {
+                var dataPoints = [];
+                var scores = JSON.parse(data);
+                for (value = 0; value < scores.length; value++) {
+                    dataPoints.push({y: parseInt(scores[value]["total_score"]), label: scores[value]["total_score"], indexLabel: scores[value]["user_id__username"]});
+                }
+
+                $('#chartContainer').height((1000 * dataPoints.length) + "px");
+
+                var chart = new CanvasJS.Chart("chartContainer", {
+                    backgroundColor: "transparent",
+                    animationEnabled: true,
+                    dataPointWidth: 30,
+                    axisY: {
+                        tickThickness: 0,
+                        lineThickness: 0,
+                        valueFormatString: " ",
+                        gridThickness: 0
+                    },
+                    axisX: {
+                        tickThickness: 0,
+                        lineThickness: 0,
+                        labelFontSize: 18,
+                        labelFontColor: "Peru"
+
+                    },
+                    data: [
+                        {
+                            indexLabelFontSize: 20,
+                            toolTipContent: "<span style='\"'color: {color};'\"'><strong>{indexLabel}</strong></span><span style='\"'font-size: 15px; color:peru '\"'><strong>{y}</strong></span>",
+                            indexLabelPlacement: "inside",
+                            indexLabelFontColor: "white",
+                            indexLabelFontWeight: 100,
+                            indexLabelFontFamily: "Verdana",
+                            color: "#62C9C3",
+                            type: "bar",
+                            dataPoints: dataPoints
+                        }
+                    ]
+                });
+                chart.render();
+            });
+        }
+
+        function scrollChart() {
+
+            $("#scroll-container").animate({
+                scrollTop: '+=50'
+            }, 800);
+        }
+    </script>
+
+    <style>
+
+
+        .left_menu {
+            z-index: 2;
+            height: 100%;
+            margin-right: 0;
+            background: linear-gradient(141deg, #aa90a0 0%, #fed98d 75%);
+            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+            text-align: center;
+        }
+        .dbutton {
+            height: 72px;
+            width: 72px;
+            margin-left: auto;
+            margin-right: auto;
+            padding-top: 12px;
+            margin-bottom: 70%;
+        }
+        .dbutton:hover {
+            border-radius: 36px;
+            border-color: #fff7ff;
+            border-style: solid;
+            border-width: 3px;
+            padding-top: 9px;
+
+        }
+
+        .show_me_button {
+            height: 100px;
+            width: 100px;
+            margin-left: auto;
+            margin-right: auto;
+            padding-top: 12px;
+            margin-bottom: 70%;
+            text-align: center;
+        }
+        .show_me_button:hover {
+            border-radius: 50px;
+            border-color: #fff7ff;
+            border-style: solid;
+            border-width: 3px;
+            padding-top: 9px;
+
+        }
+
+        .header-info {
+            margin-top: 30px;
+            height: 20%;
+        }
+
+        .logo img {
+
+        }
+
+    </style>
+
+    <div class="background-image"></div>
+    <div class="container-fluid" style="height: 100%">
+        <div class="row justify-content-center" style="height: 100%">
+            <div class="col-md-1 left_menu" style = "position: fixed; left: 0;">
+                <div class="display-buttons" style="margin-top: 200%">
+                    <div class="rating-button dbutton" onclick="smoothScroll(document.getElementById('rating-view'))">
+                        <img src="../../static/podium.png" height='48' width="48">
+                    </div>
+                    <div class="map-button dbutton" onclick="smoothScroll(document.getElementById('map-view'))">
+                        <img src="../../static/map.png" height='48' width="48">
+                    </div>
+                    <div class="about-button dbutton" onclick="smoothScroll(document.getElementById('about-view'))">
+                        <img src="../../static/about.png" height='48' width="48">
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-10 content" style="margin-left: 0">
+                <div class="row" id="rating-view" style=" width: 100%; height: 100%;">
+                    <div class="container" style="width: 100%">
+                        <div class="row header-info">
+                            <div class="col-md-2">
+                                <div class="logo" style="height: 150px; width: 150px; margin-left: auto; margin-right: auto">
+                                    <img src="../../static/logo.png" height=100% width=100%>
+                                </div>
+                            </div>
+                            <div class="col-md-4" style="text-align: left">
+                                <h1 style="color: #000000">Our webservice name</h1>
+                            </div>
+                            <div class="col-md-5" style="text-align: right">
+                                <h3  style="color: #000000">Are you ready to be good?<br> World is waiting!</h3>
+                            </div>
+                        </div>
+                        <div class="row" style="text-align: center">
+                            <div class="col-md-12">
+                                <h1>Rating</h1>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-2">
+                                <div class="about-button show_me_button" onclick="scrollChart()">
+                                    <img src="../../static/about.png" height='48' width="48" style="margin-left: 3px">
+                                    <br>
+                                    Show me
+                                </div>
+                            </div>
+                            <div class="col-md-9">
+                                <div id="scroll-container" style="overflow:scroll; height:600px; overflow-x: hidden;">
+                                    <div id="chartContainer" style="width: 100%;"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row" id="map-view" style=" width: 100%; height: 100%; background-color: #0d3349">
+                    <div class="container">
+                        <div class="row" style="height: 100%">
+                            <div class="col-md-3">
+                            </div>
+                            <div class="col-md-9" style="height: 100%">
+                                <div id="viewDiv" style="margin-top: 7%; width: 100%; height: 90%;"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="row" id="about-view" style=" width: 100%; height: 100%; background-color: #1f7e9a">
+
+                </div>
+            </div>
+            <div class="col-md-2 side_menu" style = "padding-right: 0; position: fixed; top: 0; right: 0; opacity: 1; height: 100%">
+                {% include "sideMenu.html" %}
+            </div>
+        </div>
+    </div>
+    <script type="text/babel" src="../../static/app.jsx"></script>
+    <script>
+    </script>
+{% endblock %}
