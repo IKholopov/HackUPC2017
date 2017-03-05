@@ -2,8 +2,6 @@ __author__ = 'Security'
 import urllib.request as r
 import json
 from pprint import pprint
-CLIENT_ID = "e9ef95d606254b4ebbded56435ceaa9d"
-CLIENT_SECRET = "77a0f2bbebda4cdbb7bbc524b3f1acc7"
 ACCESS_TOKEN = "822117162.e9ef95d.16e81916674b46f9a9988a052a53fe7c"
 
 """
@@ -33,7 +31,7 @@ def pictures_by_location(lat, lng, dist=5000):
         results.append({'image_url': image_url, 'instagram_link': link, 'lat': lat, 'lng': lng, 'user_name': user_name, 'text': text})
     return results
 
-def get_user_info():
+def get_user_info(token):
     """
     example of request_url:
     https://api.instagram.com/v1/users/self/?access_token=ACCESS-TOKEN
@@ -41,7 +39,7 @@ def get_user_info():
     :return:
     """
 
-    r_url = "https://api.instagram.com/v1/users/self/?access_token=" + str(ACCESS_TOKEN)
+    r_url = "https://api.instagram.com/v1/users/self/?access_token=" + str(token)
     data = r.urlopen(r_url).read().decode('utf8')
     data = json.loads(data)
     pprint(data)
@@ -49,14 +47,14 @@ def get_user_info():
      'user_name': data['data']['username'],
      'profile_picture': data['data']['profile_picture']}
 
-def get_self_media():
+def get_self_media(token):
     """
     example of request_url:
     ttps://api.instagram.com/v1/users/self/media/recent/?access_token=ACCESS-TOKEN
 
     :return:
     """
-    r_url = "https://api.instagram.com/v1/users/self/media/recent/?access_token=" + str(ACCESS_TOKEN)
+    r_url = "https://api.instagram.com/v1/users/self/media/recent/?access_token=" + str(token)
     data = r.urlopen(r_url).read().decode('utf8')
     data = json.loads(data)
     # pprint(data)
