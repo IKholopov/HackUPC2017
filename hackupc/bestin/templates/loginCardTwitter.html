@@ -1,4 +1,8 @@
-<div class="b-twitter-login-card">
+{% if request.user.is_authenticated %}
+    <div class="b-twitter-login-card">
+{% else %}
+    <a class="b-twitter-login-card" href="/login/twitter">
+{% endif %}
     {% load static %}
     {% load widget_tweaks %}
     <link rel="stylesheet" type="text/css" href='../../static/css/loginCardTwitter.css'>
@@ -6,8 +10,18 @@
         <div class="row">
             <div class="col-md-2" id="twitter-icon" ><img src="../../static/twitter.png"></div>
             <div class="col-md-10" id="twitter-name">
-                <h5>{{ request.user.username }} </h5>
+                <h5>
+                    {% if request.user.is_authenticated %}
+                        {{ request.user.username }}
+                    {% else %}
+                        Login via Twitter
+                    {% endif %}
+                </h5>
             </div>
         </div>
     </div>
-</div>
+{% if request.user.is_authenticated %}
+    </div>
+{% else %}
+    </a>
+{% endif %}

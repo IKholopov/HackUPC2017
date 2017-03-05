@@ -1,4 +1,8 @@
-<div class="b-insta-login-card">
+{% if request.user.is_authenticated %}
+    <div class="b-insta-login-card">
+{% else %}
+    <a class="b-insta-login-card" href="/login/instagram">
+{% endif %}
     {% load static %}
     {% load widget_tweaks %}
     <link rel="stylesheet" type="text/css" href='../../static/css/loginCardInstagram.css'>
@@ -6,8 +10,18 @@
         <div class="row">
             <div class="col-md-2" id="insta-icon" ><img src="../../static/instagram.png"></div>
             <div class="col-md-10" id="insta-name">
-                <h5>{{ request.user.username }} </h5>
+                <h5>
+                    {% if request.user.is_authenticated %}
+                        {{ request.user.username }}
+                    {% else %}
+                        Login via Instagram
+                    {% endif %}
+                </h5>
             </div>
         </div>
     </div>
-</div>
+{% if request.user.is_authenticated %}
+    </div>
+{% else %}
+    </a>
+{% endif %}

@@ -4,7 +4,7 @@ html, body
 }
 
 .background-image {
-    background-color: #c2ccd1;
+    background-color: #ffffff;
     /*-webkit-filter: blur(5px);
     -ms-filter: blur(5px);
     filter: blur(5px);*/
@@ -34,7 +34,8 @@ html, body
 }
 
 .b-user-info img {
-    width: 100%;
+    width: 80%;
+    margin-left: 10%;
     border-radius: 50%;
     border-style: solid;
     border-width: 15px;

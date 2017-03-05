@@ -10,7 +10,7 @@
         <div class="container" style="height: 100%">
             <div class="row">
                 {% if request.user.is_authenticated %}
-                    <img id="user-avatar" src="../../static/Tp3aR75sX5g.jpg" alt="Avatar"> <br>
+                    <img id="user-avatar" src="../../static/Tp3aR75sX5g.jpg" alt="Avatar" height="200"> <br>
                     </div>
                     <div class="row">
                         <div class="rating" style="text-align: center; width: 100%; margin-top: 30px; margin-bottom: 200px">
@@ -25,8 +25,10 @@
                         </div>
                     </div>
                 {% else %}
+                    {% include "loginCardFacebook.html" %}
+                    {% include "loginCardTwitter.html" %}
+                    {% include "loginCardInstagram.html" %}
                     </div>
-                    {% include "loginCard.html" %}
                 {% endif %}
         </div>
     </div>
