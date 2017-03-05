@@ -7,6 +7,9 @@
     <link rel="stylesheet" href="https://js.arcgis.com/3.20/esri/css/esri.css">
     <script src="https://js.arcgis.com/3.20/"></script>
     <script src="http://canvasjs.com/assets/script/canvasjs.min.js"></script>
+    <link rel="stylesheet" href="https://www.w3schools.com/lib/w3.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
     <style>
         .esriScalebar {
@@ -109,7 +112,7 @@
                     domClass.add(popup.domNode, "myTheme");
 
                     var map = new Map("viewDiv", {
-                        basemap: "hybrid",
+                        basemap: "osm",
                         center: [0, 0],
                         zoom: 2
                     });
@@ -183,10 +186,29 @@
 
         window.onload = function () {
             $('#user-avatar').height($('#user-avatar').width());
+            $.getJSON('/topscore', function (data) {
+                var dataPoints = [];
+                var scores = JSON.parse(data);
+                var rating = "0";
+                for (value = 0; value < scores.length; value++) {
+                    if (scores[value]["user_id__username"] == "{{ request.user.username }}") {
+                        rating = scores[value]["total_score"];
+                    }
+                }
+                $('#user-rating').html(rating);
+            });
             renderCharts();
         };
 
         function renderCharts() {
+
+            CanvasJS.addColorSet("graphColors",
+                [
+                "#fed98d",
+                "#aa90a0",
+                ]);
+
+
             var scores;
             jQuery.getJSON('/topscore', function (data) {
                 var dataPoints = [];
@@ -194,11 +216,11 @@
                 for (value = 0; value < scores.length; value++) {
                     dataPoints.push({y: parseFloat(scores[value]["total_score"]), label: scores[value]["total_score"], indexLabel: scores[value]["user_id__username"]});
                 }
-                console.log(dataPoints);
 
                 $('#chartContainer').height((50 * dataPoints.length) + "px");
 
                 var chart = new CanvasJS.Chart("chartContainer", {
+                    colorSet: "graphColors",
                     backgroundColor: "transparent",
                     animationEnabled: true,
                     dataPointWidth: 30,
@@ -212,18 +234,17 @@
                         tickThickness: 0,
                         lineThickness: 0,
                         labelFontSize: 18,
-                        labelFontColor: "Peru"
+                        labelFontColor: "white"
 
                     },
                     data: [
                         {
                             indexLabelFontSize: 20,
-                            toolTipContent: "<span style='\"'color: {color};'\"'><strong>{indexLabel}</strong></span><span style='\"'font-size: 15px; color:peru '\"'><strong>{y}</strong></span>",
+                            toolTipContent: "<span style='\"'color: #fed98d;'\"'><strong>{indexLabel}</strong></span><span style='\"'font-size: 15px; color:#fed98d '\"'><strong>{y}</strong></span>",
                             indexLabelPlacement: "inside",
                             indexLabelFontColor: "white",
                             indexLabelFontWeight: 100,
                             indexLabelFontFamily: "Verdana",
-                            color: "#62C9C3",
                             type: "bar",
                             dataPoints: dataPoints
                         }
@@ -293,7 +314,11 @@
         }
 
         .logo img {
-
+            margin-top: 12%;
+            margin-bottom: auto;
+            border-radius: 50%;
+            background: linear-gradient(141deg, #aa90a0 0%, #fed98d 75%);;
+            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
         }
 
         #auth-avatar {
@@ -306,6 +331,11 @@
             object-fit: cover;
             margin-bottom: 0;
             box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+        }
+
+        #rating-view {
+            background-image: url('../../static/back_2.jpg');
+            background-size: 100% 100%;
         }
 
         #map-view {
@@ -325,10 +355,27 @@
             border-color: #000000;
             border-style: solid;
             border-width: 2px;
+
+        }
+
+        #left-border-elem {
+            border-right-style: double;
+            border-width: 10px;
+
+            -webkit-border-image:
+                    -webkit-gradient(linear, 0 0, 0 100%, from(rgba(170, 144, 160, 1)), to(rgba(256, 217, 141, 1))) 1 100%;
+            -webkit-border-image:
+                    -webkit-linear-gradient(rgba(170, 144, 160, 1), rgba(256, 217, 141, 1)) 1 100%;
+            -moz-border-image:
+                    -moz-linear-gradient(rgba(170, 144, 160, 1), rgba(256, 217, 141, 1)) 1 100%;
+            -o-border-image:
+                    -o-linear-gradient(rgba(170, 144, 160, 1),rgba(256, 217, 141, 1)) 1 100%;
+            border-image:
+                    linear-gradient(to bottom, rgba(170, 144, 160, 1), rgba(256, 217, 141, 1)) 1 100%;
         }
 
     </style>
-<div class="background-image"></div>
+    <div class="background-image"></div>
     <div class="container-fluid" style="height: 100%">
         <div class="row justify-content-center" style="height: 100%">
             <div class="col-md-1 left_menu" style = "position: fixed; left: 0;">
@@ -350,31 +397,43 @@
                         <div class="row header-info">
                             <div class="col-md-2">
                                 <div class="logo" style="height: 150px; width: 150px; margin-left: auto; margin-right: auto">
-                                    <img src="../../static/logo.png" height=100% width=100%>
+                                    <img src="../../static/logo2.png" height=100% width=100%>
                                 </div>
                             </div>
                             <div class="col-md-4" style="text-align: left">
-                                <h1 style="color: #000000">Good=Win</h1>
+                                <div class="w3-display-left w3-padding-xlarge">
+                                    <h1 class="w3-text-white">hackUPC's</h1>
+                                    <h1 class="w3-jumbo w3-text-white w3-hide-small"><b>Good=Win</b></h1>
+                                </div>
                             </div>
                             <div class="col-md-5" style="text-align: right">
-                                <h3  style="color: #000000">Are you ready to be good?<br> World is waiting!</h3>
+                                <div class="bgimg-1 w3-display-container w3-opacity-min" id="home">
+                                    <div class="w3-display-middle" style="white-space:nowrap;" >
+                                        <span class="w3-center w3-padding-xlarge w3-black w3-xlarge w3-wide w3-animate-opacity">ARE <span class="w3-hide-small">YOU</span> READY TO BE GOOD?</span>
+
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         <div class="row" style="text-align: center">
-                            <div class="col-md-12">
-                                <h1>Rating</h1>
-                            </div>
+
                         </div>
-                        <div class="row">
-                            <div class="col-md-2">
-                                <div class="about-button show_me_button" onclick="scrollChart()">
+                        <div class="row" style="height: 75%">
+                            <div class="col-md-2" id="left-border-elem" style="text-align: center;">
+                                <div class="bgimg-1 w3-display-container w3-opacity-min" id="home" style="margin-top: 32px;">
+                                    <div class="w3-display-middle" style="white-space:nowrap;">
+                                        <span class="w3-center w3-padding-xlarge w3-black w3-xlarge w3-wide w3-animate-opacity">Rating</span>
+
+                                    </div>
+                                </div>
+                                <div class="about-button show_me_button"   style="margin-top: 100px;" onclick="scrollChart()">
                                     <img src="../../static/about.png" height='48' width="48" style="margin-left: 3px">
                                     <br>
                                     Show me
                                 </div>
                             </div>
                             <div class="col-md-9">
-                                <div id="scroll-container" style="overflow:scroll; height:600px; overflow-x: hidden; overflow-y: hidden;">
+                                <div id="scroll-container" style="overflow:scroll; height:90%; width:80%; margin-left: 10%; overflow-x: hidden; overflow-y: auto;">
                                     <div id="chartContainer" style="width: 100%;"></div>
                                 </div>
                             </div>
@@ -440,6 +499,16 @@
                                 <h3 style="color: #ffffff; text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;">Zertsalov <br> Andrey</h3>
                                 <a href="https://www.linkedin.com/in/zerts/"><img class="icon" src="../../static/linkedin-logo.png"></a>
                                 <a href="https://www.github.com/zerts/"><img class="icon" src="../../static/github-sign.png" style="height: 24px; width: 24px"></a>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3">
+
+                            </div>
+                            <div class="col-md-5" style="text-align: center">
+                                <h3 style="color: #ffffff; text-shadow: -2px 0 black, 0 2px black, 2px 0 black, 0 -2px black;; margin-top: 20%">
+                                    This is our project for HackUPC 2017
+                                </h3>
                             </div>
                         </div>
                     </div>

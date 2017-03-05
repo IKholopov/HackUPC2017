@@ -10,11 +10,16 @@
         <div class="container" style="height: 100%">
             <div class="row">
                 {% if request.user.is_authenticated %}
-                    <img id="user-avatar" src="../../static/Tp3aR75sX5g.jpg" alt="Avatar" height="200"> <br>
+                    <img id="user-avatar" src="../../static/man.png" alt="Avatar" height="200"> <br>
                     </div>
                     <div class="row">
                         <div class="rating" style="text-align: center; width: 100%; margin-top: 30px; margin-bottom: 200px">
-                            <h1> 1202 </h1>
+                            <div class="bgimg-1 w3-display-container w3-opacity-min" id="home" style="margin-top: 46px">
+                                <div class="w3-display-middle" style="white-space:nowrap;">
+                                    <span class="w3-center w3-padding-xlarge w3-black w3-xlarge w3-wide w3-animate-opacity" id="user-rating">0</span>
+
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <div class="row">
@@ -30,6 +35,6 @@
                     {% include "loginCardInstagram.html" %}
                     </div>
                 {% endif %}
-        </div>
     </div>
+</div>
 </div>
