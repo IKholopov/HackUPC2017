@@ -42,7 +42,7 @@ def process_instagram(user):
     adds = []
     print(geo_tagged)
     for tagged in geo_tagged:
-        adds.append({"geometry": {"x": tagged["lon"]*10**5, "y": tagged["lat"]*10**5}, "attributes": tagged})
+        adds.append({"geometry": {"x": 1.1*tagged["lon"]*10**5, "y": 1.2225*tagged["lat"]*10**5}, "attributes": tagged})
     print(adds)
     print(requests.post('https://services7.arcgis.com/0MAMn0h8N3f8X276/arcgis/rest/services/Social_Activity/FeatureServer/applyEdits?f=pjson&edits='+json.dumps([{"id": 0, "adds": adds}]),
             headers={'Content-type': 'application/json', 'Accept': 'text/plain'}).text)
@@ -84,7 +84,7 @@ def process_twitter(user):
     adds = []
     print(geo_tagged)
     for tagged in geo_tagged:
-        adds.append({"geometry": {"x": tagged["lon"]*10**5, "y": tagged["lat"]*10**5}, "attributes": tagged})
+        adds.append({"geometry": {"x": 1.1*tagged["lon"]*10**5, "y": 1.2225*tagged["lat"]*10**5}, "attributes": tagged})
     print(adds)
     print(requests.post('https://services7.arcgis.com/0MAMn0h8N3f8X276/arcgis/rest/services/Social_Activity/FeatureServer/applyEdits?f=pjson&edits='+json.dumps([{"id": 0, "adds": adds}]),
             headers={'Content-type': 'application/json', 'Accept': 'text/plain'}).text)
