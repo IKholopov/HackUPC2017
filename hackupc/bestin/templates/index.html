@@ -112,7 +112,7 @@
                     domClass.add(popup.domNode, "myTheme");
 
                     var map = new Map("viewDiv", {
-                        basemap: "hybrid",
+                        basemap: "osm",
                         center: [0, 0],
                         zoom: 2
                     });
@@ -400,7 +400,7 @@
                             </div>
                             <div class="col-md-5" style="text-align: right">
                                 <div class="bgimg-1 w3-display-container w3-opacity-min" id="home">
-                                    <div class="w3-display-middle" style="white-space:nowrap;">
+                                    <div class="w3-display-middle" style="white-space:nowrap;" >
                                         <span class="w3-center w3-padding-xlarge w3-black w3-xlarge w3-wide w3-animate-opacity">ARE <span class="w3-hide-small">YOU</span> READY TO BE GOOD?</span>
 
                                     </div>
@@ -412,8 +412,13 @@
                         </div>
                         <div class="row" style="height: 75%">
                             <div class="col-md-2" id="left-border-elem" style="text-align: center;">
-                                <h1 style="color: #fed98d; text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;">Rating</h1>
-                                <div class="about-button show_me_button" onclick="scrollChart()">
+                                <div class="bgimg-1 w3-display-container w3-opacity-min" id="home" style="margin-top: 32px;">
+                                    <div class="w3-display-middle" style="white-space:nowrap;">
+                                        <span class="w3-center w3-padding-xlarge w3-black w3-xlarge w3-wide w3-animate-opacity">Rating</span>
+
+                                    </div>
+                                </div>
+                                <div class="about-button show_me_button"   style="margin-top: 100px;" onclick="scrollChart()">
                                     <img src="../../static/about.png" height='48' width="48" style="margin-left: 3px">
                                     <br>
                                     Show me
@@ -486,6 +491,16 @@
                                 <h3 style="color: #ffffff; text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;">Zertsalov <br> Andrey</h3>
                                 <a href="https://www.linkedin.com/in/zerts/"><img class="icon" src="../../static/linkedin-logo.png"></a>
                                 <a href="https://www.github.com/zerts/"><img class="icon" src="../../static/github-sign.png" style="height: 24px; width: 24px"></a>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3">
+
+                            </div>
+                            <div class="col-md-5" style="text-align: center">
+                                <h3 style="color: #ffffff; text-shadow: -2px 0 black, 0 2px black, 2px 0 black, 0 -2px black;; margin-top: 20%">
+                                    This is our project for HackUPC 2017
+                                </h3>
                             </div>
                         </div>
                     </div>
