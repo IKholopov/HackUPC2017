@@ -71,11 +71,11 @@ def process_twitter(user):
                 location = json.loads(responce.text)["results"][0]["geometry"]["location"]
                 geo = [location["lng"], location["lat"]]
             geo_str = str(geo)
-            print(status.id)
+            status_id = status.id % 1000000
             try:
-                activity = Activity.objects.get(social_status_id=status.id)
+                activity = Activity.objects.get(social_status_id=status_id)
             except Activity.DoesNotExist:
-                charity_twitts.append(Activity.create(social_status_id=status.id, user_id=user, source=status.text,
+                charity_twitts.append(Activity.create(social_status_id=status_id, user_id=user, source=status.text,
                                 score=score, geodata=geo_str))
                 if geo is not None:
                     geo_tagged.append({"UserID": user.id, "text": status.text.replace('#', ' '),
