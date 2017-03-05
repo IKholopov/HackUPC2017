@@ -2,7 +2,7 @@ from django.db import models
 from django.contrib.auth.admin import User
 
 class Activity(models.Model):
-    social_status_id = models.IntegerField(unique=False)
+    social_status_id = models.IntegerField(unique=True)
     user_id = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
     source = models.CharField(max_length=1024)
     score = models.FloatField(default=-1)

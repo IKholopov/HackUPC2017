@@ -71,6 +71,7 @@ def process_twitter(user):
                 location = json.loads(responce.text)["results"][0]["geometry"]["location"]
                 geo = [location["lng"], location["lat"]]
             geo_str = str(geo)
+            print(status.id)
             try:
                 activity = Activity.objects.get(social_status_id=status.id)
             except Activity.DoesNotExist:
