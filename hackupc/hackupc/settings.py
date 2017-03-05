@@ -25,7 +25,7 @@ SECRET_KEY = 'zk7wppgpy72)f(&8lq-cumsq1v)!5#8xxl$3d_#uj3e6e%-)f6'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = [u'team-panda.scalingo.io', '127.0.0.1']
+ALLOWED_HOSTS = [u'team-panda.scalingo.io', '127.0.0.1', u'good-win.scalingo.io']
 
 
 # Application definition
