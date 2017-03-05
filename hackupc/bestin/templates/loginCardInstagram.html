@@ -1,5 +1,5 @@
 {% if request.user.is_authenticated %}
-    <div class="b-insta-login-card">
+    <a class="b-twitter-login-card" href="/logout">
 {% else %}
     <a class="b-insta-login-card" href="/login/instagram">
 {% endif %}
