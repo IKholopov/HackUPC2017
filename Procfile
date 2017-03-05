@@ -1,2 +1,2 @@
 web: gunicorn hackupc.wsgi --chdir hackupc
-postdeploy: ls
+postdeploy: python hackupc/manage.py migrate
