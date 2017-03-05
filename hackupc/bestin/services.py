@@ -19,22 +19,33 @@ def get_score(intput_text):
 def process_instagram(user):
     token = user.social_auth.get().extra_data["access_token"]
     posts = get_self_media(token)
+    charity_twitts = []
+    geo_tagged = []
     for post in posts:
         score = get_score(post["text"])
         print(score)
-    if score > 0:
-        geo = [status["lng"], status["lat"]]
-        if geo[0] is not None:
-            print(geo)
-            geo_str = str(geo)
-        try:
-            activity = Activity.objects.get(social_status_id=status.id)
-        except Activity.DoesNotExist:
-            charity_twitts.append(Activity.create(social_status_id=status.id, user_id=user, source=status.text,
-                            score=score, geodata=geo_str))
-            if geo is not None:
-                geo_tagged.append({"UserID": user.id, "text": status.text.replace('#', ' '),
-                "score": score, "lat": geo[1], "lon": geo[0]})
+        if score > 0:
+            geo = [post["lng"], post["lat"]]
+            post_id =int(post["id"].split('_')[0])%1000000
+            if geo[0] is not None:
+                print(geo)
+                geo_str = str(geo)
+            try:
+                activity = Activity.objects.get(social_status_id=post_id)
+            except Activity.DoesNotExist:
+                charity_twitts.append(Activity.create(social_status_id=post_id, user_id=user, source=post["text"],
+                                score=score, geodata=geo_str))
+                if geo is not None:
+                    geo_tagged.append({"UserID": user.id, "text": post["text"].replace('#', ' '),
+                    "score": score, "lat": geo[1], "lon": geo[0]})
+    Activity.objects.bulk_create(charity_twitts)
+    adds = []
+    print(geo_tagged)
+    for tagged in geo_tagged:
+        adds.append({"geometry": {"x": tagged["lon"]*10**5, "y": tagged["lat"]*10**5}, "attributes": tagged})
+    print(adds)
+    print(requests.post('https://services7.arcgis.com/0MAMn0h8N3f8X276/arcgis/rest/services/Social_Activity/FeatureServer/applyEdits?f=pjson&edits='+json.dumps([{"id": 0, "adds": adds}]),
+            headers={'Content-type': 'application/json', 'Accept': 'text/plain'}).text)
 
 def process_twitter(user):
     tokens = user.social_auth.get().extra_data["access_token"]
