@@ -347,6 +347,9 @@
             background-image: url('../../static/back_about.jpg');
             background-size: 100% 100%;
         }
+        #left-border-elem {
+          border-right-width:0;
+        }
 
         .icon {
             height: 24px;
@@ -360,7 +363,8 @@
 
         #left-border-elem {
             border-right-style: double;
-            border-width: 10px;
+            border-width: 0px;
+            border-right-width: 0;
 
             -webkit-border-image:
                     -webkit-gradient(linear, 0 0, 0 100%, from(rgba(170, 144, 160, 1)), to(rgba(256, 217, 141, 1))) 1 100%;
@@ -409,7 +413,7 @@
                             <div class="col-md-5" style="text-align: right">
                                 <div class="bgimg-1 w3-display-container w3-opacity-min" id="home">
                                     <div class="w3-display-middle" style="white-space:nowrap;" >
-                                        <span class="w3-center w3-padding-xlarge w3-black w3-xlarge w3-wide w3-animate-opacity">ARE <span class="w3-hide-small">YOU</span> READY TO BE GOOD?</span>
+                                        <span class="w3-center w3-padding-xlarge w3-black w3-xlarge w3-wide w3-animate-opacity">ARE <span class="w3-hide-small">YOU</span> READY TO DO GOOD?</span>
 
                                     </div>
                                 </div>
@@ -419,7 +423,7 @@
 
                         </div>
                         <div class="row" style="height: 75%">
-                            <div class="col-md-2" id="left-border-elem" style="text-align: center;">
+                            <div class="col-md-2" id="left-border-elem" style="text-align: center;border-right-width:0;">
                                 <div class="bgimg-1 w3-display-container w3-opacity-min" id="home" style="margin-top: 32px;">
                                     <div class="w3-display-middle" style="white-space:nowrap;">
                                         <span class="w3-center w3-padding-xlarge w3-black w3-xlarge w3-wide w3-animate-opacity">Rating</span>
