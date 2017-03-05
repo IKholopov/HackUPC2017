@@ -33,12 +33,13 @@ def process_instagram(user):
             try:
                 activity = Activity.objects.get(social_status_id=post_id)
             except Activity.DoesNotExist:
-                charity_twitts.append(Activity.create(social_status_id=post_id, user_id=user, source=post["text"],
-                                score=score, geodata=geo_str))
+                act = Activity.create(social_status_id=post_id, user_id=user, source=post["text"],
+                                score=score, geodata=geo_str)
+                act.save()
                 if geo is not None:
                     geo_tagged.append({"UserID": user.id, "text": post["text"].replace('#', ' '),
                     "score": score, "lat": geo[1], "lon": geo[0]})
-    Activity.objects.bulk_create(charity_twitts)
+    #Activity.objects.bulk_create(charity_twitts)
     adds = []
     print(geo_tagged)
     for tagged in geo_tagged:
@@ -74,13 +75,14 @@ def process_twitter(user):
             try:
                 activity = Activity.objects.get(social_status_id=status.id)
             except Activity.DoesNotExist:
-                charity_twitts.append(Activity.create(social_status_id=status.id, user_id=user, source=status.text,
-                                score=score, geodata=geo_str))
+                act = Activity.create(social_status_id=status.id, user_id=user, source=status.text,
+                                score=score, geodata=geo_str)
+                act.save()
                 if geo is not None:
                     geo_tagged.append({"UserID": user.id, "text": status.text.replace('#', ' '),
                     "score": score, "lat": geo[1], "lon": geo[0]})
 
-    Activity.objects.bulk_create(charity_twitts)
+    #Activity.objects.bulk_create(charity_twitts)
     adds = []
     print(geo_tagged)
     for tagged in geo_tagged:
