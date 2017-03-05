@@ -201,6 +201,14 @@
         };
 
         function renderCharts() {
+
+            CanvasJS.addColorSet("graphColors",
+                [
+                "#fed98d",
+                "#aa90a0",
+                ]);
+
+
             var scores;
             jQuery.getJSON('/topscore', function (data) {
                 var dataPoints = [];
@@ -212,6 +220,7 @@
                 $('#chartContainer').height((50 * dataPoints.length) + "px");
 
                 var chart = new CanvasJS.Chart("chartContainer", {
+                    colorSet: "graphColors",
                     backgroundColor: "transparent",
                     animationEnabled: true,
                     dataPointWidth: 30,
@@ -236,7 +245,6 @@
                             indexLabelFontColor: "white",
                             indexLabelFontWeight: 100,
                             indexLabelFontFamily: "Verdana",
-                            color: "#62C9C3",
                             type: "bar",
                             dataPoints: dataPoints
                         }
@@ -326,7 +334,7 @@
         }
 
         #rating-view {
-            background-image: url('../../static/back_1.jpg');
+            background-image: url('../../static/back_2.jpg');
             background-size: 100% 100%;
         }
 
