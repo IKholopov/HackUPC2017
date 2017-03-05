@@ -7,9 +7,17 @@ from django.core import serializers
 import bestin.services as services
 from bestin.models import Activity
 import json
+import time
 
 class IndexView(TemplateView):
     template_name="index.html"
+
+class Loading(TemplateView):
+    template_name="loading.html"
+
+def load_posts(request):
+    services.analyze_feed(request.user)
+    return JsonResponse(dict())
 
 def test(request):
     services.analyze_feed(request.user)

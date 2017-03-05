@@ -91,23 +91,28 @@ class content_analyzer:
                 score += self.keywords[stem(word).lower()]
         return score
 
-    # def process_picture(self, url):
-    #     score = 0
-    #     threshold = 0
-    #     r = requests.post(url,headers=headers)
-    #     res = json.loads(r.text)
-    #     people = res['frames'][0]['people']
-    #     if people.size > 7:
-    #         threshold = people.size * 50
-    #         for person in people:
-    #             emotions = person['emotions']
-    #             person_score = 0
-    #             person_score += emotios['joy'] - emotions['anger']
-    #             score += person_score
-    #     if score > threshold:
-    #         score = float(score) / 100 / people.size
-    #     fd = urllib.urlopen(url)
-    #     image_file = io.BytesIO(fd.read())
-    #     image = Image.open(image_file)
-    #     score+= process_text(tesserocr.image_to_text(image))
-    #     return score
+    def process_picture(self, url):
+        real_url = 'https://api.kairos.com/v2/media?source=' + url
+        headers = {'app_id': '7fd7d9b5', 'app_key': 'a792493bd95822c3e8f00c3665f5f4a2'}
+        score = 0
+        threshold = 0
+        r = requests.post(real_url,headers=headers)
+#         print(r)
+        res = json.loads(r.text)
+        people = res['frames'][0]['people']
+        if len(people) > 4:
+            threshold = len(people) * 50
+            for person in people:
+                emotions = person['emotions']
+                person_score = 0
+                person_score += emotios['joy'] - emotions['anger']
+                score += person_score
+        if score > threshold:
+            score = float(score) / 100 / people.size
+        fd = urlopen(url)
+        image_file = io.BytesIO(fd.read())
+        image = Image.open(image_file)
+        text = tesserocr.image_to_text(image).strip()
+        if text != None and text != "":
+            score+= self.process_text(text)
+        return score
